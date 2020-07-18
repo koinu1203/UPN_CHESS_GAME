@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#pragma once
 
 #define LONGITUD 8
 #define PEON_NEGRO 1

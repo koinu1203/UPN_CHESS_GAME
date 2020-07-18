@@ -14,12 +14,18 @@
     <ClCompile Include="Source.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="TabP.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chess.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="IA.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="TabP.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
