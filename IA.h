@@ -8,17 +8,17 @@
 #define ALFIL 4 
 #define REINA 5
 #define REY 6 
-struct mov {
-	pos movimiento;
-	mov* sgte;
+struct mov { 
+	pos movimiento; 
+	mov* sgte; 
 };
 typedef struct mov* pilaMov;
-struct movpiezas {
-	pos act;
-	pilaMov m; //es un puntero que determinara los movimientos posibles de la pieza, si el puntero esta en null entonces no existen movimientos pasa esa pieza
-	int pieza;
+struct movpiezas { //<-
+	pos act; //<-posicion actual
+	pilaMov m; //<-es un puntero que determinara los movimientos posibles de la pieza, si el puntero esta en null entonces no existen movimientos pasa esa pieza
+	int pieza;//<-
 };
-int tabV[8][8]; //tablero de valor contendra los valores de las fichas en tiempo real
+int tabV[8][8]; //tablero de valor contendra los valores de las fichas en tiempo real 
 /*
 	-BLANCO / +NEGRO
 	PEON = 10
@@ -65,7 +65,7 @@ void actTabV() {
 	SeudoCodigo:
 	funcion IA:
 		buscar todos los posibles movimientos de todas las posibles fichas
-		generar las tablas de posicion para el caballo, reina y alfil con respecto al rey enemigo y las demas piezas enemigas (aca podemos usar un algoritmo voraz o algun otro)
+	->	generar las tablas de posicion para el caballo, reina y alfil con respecto al rey enemigo y las demas piezas enemigas (aca podemos usar un algoritmo voraz o algun otro)
 		funcion Evaluar movimiento:
 			escoger un movimiento entre los posibles
 			realizarlo
@@ -77,6 +77,20 @@ void actTabV() {
 			probar siguiente jugada
 		retornar movimiento escogido
 */
+
+
+/*
+int tablero[8][8] =
+{ 2, 3, 4, 5, 6, 4, 3, 2,
+  1, 1, 1, 1, 1, 1, 1, 1,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  10,10,10,10,10,10,10,10,
+  10,10,10,10,10,10,10,10,
+ -1,-1,-1,-1,-1,-1,-1,-1,
+ -2,-3,-4,-5,-6,-4,-3,-2, }
+*/
+
 
 /*
 		agrega un elemento a pila
@@ -138,7 +152,7 @@ void generarListaDeMovimientos(movpiezas lista[], int color) { //color a selecci
 				lista[cont].act.y = i;
 				switch (abs(tablero[i][s])) {
 				case PEON: {
-
+					
 
 					break;
 				};
@@ -173,3 +187,45 @@ void generarListaDeMovimientos(movpiezas lista[], int color) { //color a selecci
 		}
 	}
 }
+
+/*
+	Tablas De Posiciones (se descarta las tablas variables, ahora seran tablas fijas)
+*/
+float tabPPeon[8][8]
+  { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+	1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
+	0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
+	0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
+	0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
+float tabPCaballo[8][8]
+{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
+  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
+  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
+  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
+float tabPPeon[8][8]
+{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
+  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
+  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
+  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
+float tabPPeon[8][8]
+{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
+  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
+  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
+  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
+float tabPPeon[8][8]
+{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
+  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
+  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
+  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
+/*
+	Actualiza Las Tablas Posicion de las demas 
+*/
