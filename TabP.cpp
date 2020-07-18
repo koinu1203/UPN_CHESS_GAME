@@ -1,8 +1,6 @@
-#include "TabP.h"
-#include <iostream>
 
-using namespace std;
-int secundarimain() {
+
+/*void secundarimain(){
 	int aux[8][8]{
 		0, 0, 0, 0, 0, 0, 0, 0,
 		1, 1, 1, 1, 1, 1, 1, 1,
@@ -18,9 +16,8 @@ int secundarimain() {
 
 	for (int i = 0; i < N; i++) {
 		for (int s = 0; s < N; i++) {
-			cout <<t.vtorre[i][s] << " ";
+			std::cout <<t.vtorre[i][s] << " ";
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
-	return 0;
-}
+}*/

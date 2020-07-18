@@ -1,7 +1,7 @@
 #pragma once
-#include <iostream>
 #include "Chess.h"
-#include <stdlib.h>
+#include "TabP.h"
+
 #define PEON 1
 #define TORRE 2
 #define CABALLO 3

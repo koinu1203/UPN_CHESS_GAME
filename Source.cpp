@@ -1,4 +1,3 @@
-#include <iostream>
 #include "IA.h" //libreria donde están todas las funciones 
 
 //las variables empiezan en 'i' para identificar que es el entero, ya que hay 
@@ -536,5 +535,24 @@ int main()
 		ventana.display(); //mostrar ventana
 	}
 
+	/*int aux[8][8]{
+		0, 0, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 4, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+	};
+
+	TabP t;
+	t.mejorarMapa(t.vtorre, aux, 1, 50);
+	for (int i = 0; i < N; i++) {
+		for (int s = 0; s < N; s++) {
+			std::cout << t.vtorre[i][s] << " ";
+		}
+		std::cout << std::endl;
+	}*/ //Aun en pruebas clase TabP
 	return 0;
 }//holamnudi
