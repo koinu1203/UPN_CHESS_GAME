@@ -70,13 +70,20 @@ public:
 		Mejora el mapa de la pieza mediante el uso del mapa del juego actual
 		ambas matrizes son de 8x8
 	*/
-	void clavarpeon(float mPieza[N][N], int x, int y,int vPieza) {
-
-		if (x != 0 || x != N - 1) {
-			mPieza[y - 1][x + 1] -= 1.0;
-			mPieza[y - 1][x - 1] -= 1.0; 
+	void clavarpeon(float mPieza[N][N], int x, int y,int vPieza,int color) {
+		if (x != 0 && x != N - 1) {
+			mPieza[y + color][x+1] -= 1.0; //derecha
+			mPieza[y + color][x-1] -= 1.0; //izquierda
 		}
-		mPieza[y][x] += (10 / vPieza);
+		else {
+			if (x == 0) {
+				mPieza[y + color][(x + 1)] -= 1.0;
+			}
+			if (x == N - 1) {
+				mPieza[y + color][x - 1] -= 1.0;
+			}
+		}
+		mPieza[y][x] += (10.0 / (float)vPieza);
 	}
 	void clavarTorre(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		for (int i = x; i < N; i++) {
@@ -123,26 +130,35 @@ public:
 				}
 			}
 		}
-		mPieza[y][x] = mPieza[y][x] + (50 / vPieza);
+		mPieza[y][x] +=  (50 / (float)vPieza);
 	}
 	void clavarCaballo(float mPieza[N][N], int x, int y, int vPieza) {
+		if (y - 2 >= 0) {
+			if(x + 1 < N)
+				mPieza[y - 2][x + 1] -= 1.0;
+			if (x - 1 >= 0)
+				mPieza[y - 2][x - 1] -= 1.0;
+		}
+
 		if (x + 2 < N) {
-			mPieza[y + 1][x + 2] -= 1.0;
-			mPieza[y - 1][x + 2] -= 1.0;
+			if(y+1<N)
+				mPieza[y + 1][x + 2] -= 1.0;
+			if(y-1>0)
+				mPieza[y - 1][x + 2] -= 1.0;
 		}
 		if (x - 2 > 0 ) {
-			mPieza[y + 1][x - 2] -= 1.0;
-			mPieza[y - 1][x - 2] -= 1.0;
+			if(y+1<N)
+				mPieza[y + 1][x - 2] -= 1.0;
+			if(y-1>0)
+				mPieza[y - 1][x - 2] -= 1.0;
 		}
 		if (y + 2 < N) {
-			mPieza[y + 2][x + 1] -= 1.0;
-			mPieza[y + 2][x - 1] -= 1.0;
+			if(x+1<N)
+				mPieza[y + 2][x + 1] -= 1.0;
+			if(x-1>0)
+				mPieza[y + 2][x - 1] -= 1.0;
 		}
-		if (y - 2 >= 0) {
-			mPieza[y - 2][x + 1] -= 1.0;
-			mPieza[y - 2][x - 1] -= 1.0;
-		}
-		mPieza[y][x] += (30/vPieza);
+		mPieza[y][x] += (30/(float)vPieza);
 	}
 	void clavarAlfil(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		int s = x;
@@ -197,7 +213,7 @@ public:
 			}
 			s--;
 		}
-		mPieza[y][x] += (30/vPieza);
+		mPieza[y][x] += (30/(float)vPieza);
 	}
 	void clavarReina(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		for (int i = x; i < N; i++) {
@@ -296,81 +312,62 @@ public:
 			}
 			s--;
 		}
-		mPieza[y][x] += (90 / vPieza);
+		mPieza[y][x] += (90 / (float)vPieza);
 	}
 	void clavarRey(float mPieza[N][N], int x, int y, int vPieza) {
 		if (x + 1 >= 0) {
 			mPieza[y][x + 1] -= 1.0;
+			if(y-1>=0)
+				mPieza[y -1][x + 1] -= 1.0;//
 		}
 		if (x - 1 >= 0) {
 			mPieza[y][x - 1] -= 1.0;
+			if (y + 1 < N)
+				mPieza[y + 1][x - 1] -= 1.0;
 		}
 		if (y + 1 >= 0) {
 			mPieza[y+1][x] -= 1.0;
+			if(x+1<N)
+				mPieza[y + 1][x+1] -= 1.0;
 		}
 		if (y - 1 >= 0) {
 			mPieza[y - 1][x] -= 1.0;
+			if(x-1>=0)
+				mPieza[y - 1][x-1] -= 1.0;
 		}
-		mPieza[y][x] += (900/vPieza);
+		mPieza[y][x] += (900/(float)vPieza);
 	}
+	/*
+		mPieza=MapadeValores a Mejorar | mJuego=MaparActualDeJuego | color 1=negro -1=blanco | Valor de la pieza en el tablero
+	*/
 	void mejorarMapa(float mPieza[N][N], int mJuego[N][N],int color,int vPieza) {
 		for (int i = 0; i < N; i++) {
 			for (int s = 0; s < N; s++) {
-				if (mJuego[s][i] * color > 0) {
+				if (mJuego[i][s]*color > 0) {
 					//tablero[y][x];
-					switch (mJuego[s][i] * color) {
+					switch (abs(mJuego[i][s])) {
 					case 1: {
-						if (mJuego[s][i]>0) { //negro
-							clavarpeon(mPieza, abs(i - N - 1), abs(s - N - 1),vPieza);
-						}
-						else { //blanco
-							clavarpeon(mPieza, i, s, vPieza);
-						}
+						clavarpeon(mPieza, s, i, vPieza, color);
 						break;
 					};
 					case 2: {
-						if (mJuego[s][i] > 0) { //negro
-							clavarTorre(mPieza, abs(i - N - 1), abs(s - N - 1), vPieza,mJuego);
-						}
-						else { //blanco
-							clavarTorre(mPieza, i, s, vPieza,mJuego);
-						}
+						clavarTorre(mPieza, s, i, vPieza, mJuego);
 						break;
 					};
 					case 3: {
-						if (mJuego[s][i] > 0) { //negro
-							clavarCaballo(mPieza, abs(i - N - 1), abs(s - N - 1), vPieza);
-						}
-						else { //blanco
-							clavarCaballo(mPieza, i, s, vPieza);
-						}
+						clavarCaballo(mPieza, s, i, vPieza);
 						break;
 					};
 					case 4: {
-						if (mJuego[s][i] > 0) { //negro
-							clavarAlfil(mPieza, abs(i - N - 1), abs(s - N - 1), vPieza, mJuego);
-						}
-						else { //blanco
-							clavarAlfil(mPieza, i, s, vPieza, mJuego);
-						}
+						clavarAlfil(mPieza, s, i, vPieza, mJuego);
 						break;
 					};
 					case 5: {
-						if (mJuego[s][i] > 0) { //negro
-							clavarReina(mPieza, abs(i - N - 1), abs(s - N - 1), vPieza, mJuego);
-						}
-						else { //blanco
-							clavarReina(mPieza, i, s, vPieza, mJuego);
-						}
+						clavarReina(mPieza, s, i, vPieza, mJuego);
 						break;
 					};
 					case 6: {
-						if (mJuego[s][i] > 0) { //negro
-							clavarRey(mPieza, abs(i - N - 1), abs(s - N - 1), vPieza);
-						}
-						else { //blanco
-							clavarRey(mPieza, i, s, vPieza);
-						}
+						clavarRey(mPieza, s, i, vPieza);
 						break;
 					};
 					}

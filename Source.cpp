@@ -535,11 +535,21 @@ int main()
 		ventana.display(); //mostrar ventana
 	}
 
-	/*int aux[8][8]{
+	int aux[8][8]{
+		6, 0, 0, 0, 0, 0, 0, 6,
 		0, 0, 0, 0, 0, 0, 0, 0,
-		1, 1, 1, 1, 1, 1, 1, 1,
 		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 4, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 6, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		6, 0, 0, 0, 0, 0, 0, 6,
+	};
+	float temp[8][8]{
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
@@ -547,12 +557,12 @@ int main()
 	};
 
 	TabP t;
-	t.mejorarMapa(t.vtorre, aux, 1, 50);
+	t.mejorarMapa(temp, tablero, -1, 100);
 	for (int i = 0; i < N; i++) {
 		for (int s = 0; s < N; s++) {
-			std::cout << t.vtorre[i][s] << " ";
+			std::cout << temp[i][s] << "\t";
 		}
 		std::cout << std::endl;
-	}*/ //Aun en pruebas clase TabP
+	} //Aun en pruebas clase TabP
 	return 0;
 }//holamnudi
