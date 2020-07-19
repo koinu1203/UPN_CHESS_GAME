@@ -178,7 +178,7 @@ int movTorreNegra(int prevX, int prevY, int nuevoX, int nuevoY)
 			break;
 		}
 	}
-	for (int i = prevX + 1; i <= 7; i++) // a la der.
+	for (int i = prevX + 1; i <= 7; i++) // a la izq.
 	{
 		if (tablero[prevY][i] <= 0 && (nuevoY == prevY && nuevoX == i))
 		{
