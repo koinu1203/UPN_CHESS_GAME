@@ -13,11 +13,13 @@ struct mov {
 	mov* sgte; 
 };
 typedef struct mov* pilaMov;
-struct movpiezas { //<-
+struct movpiezas {
 	pos act; //<-posicion actual
 	pilaMov m; //<-es un puntero que determinara los movimientos posibles de la pieza, si el puntero esta en null entonces no existen movimientos pasa esa pieza
 	int pieza;//<-
+	movpiezas* sgte;
 };
+typedef struct movpiezas* lPiezas;
 int tabV[8][8]; //tablero de valor contendra los valores de las fichas en tiempo real 
 /*
 	-BLANCO / +NEGRO
@@ -145,7 +147,20 @@ pos getPila(pilaMov& p) {
 	}
 }
 
-
+/*
+	Blanco=-1 | Negro=1
+*/
+int numPiezas(int color, int t[N][N]) {
+	int sum=0;
+	for (int i = 0; i < N; i++) {
+		for (int s = 0; s < N; s++) {
+			if (t[i][s] * color > 0) {
+				sum++;
+			}
+		}
+	}
+	return sum;
+}
 void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //color a seleccionar blanco=-1, negro=1
 	int cont = 0;
 	for (int i = 0; i < LONGITUD; i++) {
@@ -190,11 +205,164 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 		}
 	}
 }
+
+void addLista(lPiezas &l, movpiezas value) {
+	lPiezas nuevo= new movpiezas;
+	nuevo->act = value.act;
+	nuevo->m = value.m;
+	nuevo->pieza = value.pieza;
+	try
+	{
+		if (l != NULL) {
+			nuevo->sgte = l;
+			l = nuevo;
+		}
+		else {
+			nuevo->sgte = NULL;
+			l = nuevo;
+		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "Error de escritura lista piezas" << std::endl;
+	}
+}
+/*
+	dejar excep en NULL si no quieres obviar ningun elemento
+*/
+void limpiarLPiezas(lPiezas &l, lPiezas &excep) {
+	while (l != NULL) {
+		if (excep != NULL && l == excep) {
+			try
+			{
+				l = l->sgte;
+				excep->sgte = NULL;
+			}
+			catch (const std::exception&)
+			{
+				try
+				{
+					excep->sgte = NULL;
+				}
+				catch (const std::exception&)
+				{
+					excep = NULL;
+					std::cout << "Error escribir en excep lista: lista sin fin (null)" << std::endl;
+				}
+				l = NULL;
+				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
+			}
+		}
+		else {
+			try
+			{
+				lPiezas temp = new movpiezas;
+				temp = l;
+				l = l->sgte;
+				delete temp;
+			}
+			catch (const std::exception&)
+			{
+				l = NULL;
+				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
+			}
+		}
+	}
+}
+void limpiarLPiezas(lPiezas& l, lPiezas& excep) {
+	while (l != NULL) {
+		if (excep != NULL && l == excep) {
+			try
+			{
+				l = l->sgte;
+				excep->sgte = NULL;
+			}
+			catch (const std::exception&)
+			{
+				try
+				{
+					excep->sgte = NULL;
+				}
+				catch (const std::exception&)
+				{
+					excep = NULL;
+					std::cout << "Error escribir en excep lista: lista sin fin (null)" << std::endl;
+				}
+				l = NULL;
+				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
+			}
+		}
+		else {
+			try
+			{
+				lPiezas temp = new movpiezas;
+				temp = l;
+				l = l->sgte;
+				delete temp;
+			}
+			catch (const std::exception&)
+			{
+				l = NULL;
+				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
+			}
+		}
+	}
+}
+
+void realizarMov(int t[N][N], lPiezas m) {
+	if (abs(m->pieza) == 6 && (m->act.x+2== m->m->movimiento.x || m->act.x - 2 == m->m->movimiento.x)) {
+
+	}
+	t[m->act.y][m->act.x] = 0;
+	t[m->m->movimiento.y][m->m->movimiento.x] = m->pieza;
+}
 /*
 	cont = contador de profundidad
+	color blanco =-1 negro =1
 */
-void fBackTraking(movpiezas p,int cont,int tJuegoSec,int ){
-
+float fBackTraking(int cont,int tJuegoSec[N][N],int color){
+	if (cont == 0) {
+		return 0.0;
+	}
+	else {
+		int num = numPiezas(color, tJuegoSec);
+		if (num > 1) {
+			lPiezas l = new movpiezas[num];
+			lPiezas mayor = new movpiezas;
+			mayor->m = NULL;
+			TabP t;
+			//adaptar obtener movimientos
+			for (int i = 0; i < num; i++) {
+				if (l[i].m != NULL) {
+					if (mayor == NULL) {
+						mayor = &l[i];
+					}
+					else {
+						if (t.getValor(tJuegoSec, color, l[i].pieza, l[i].m->movimiento.x, l[i].m->movimiento.y) > t.getValor(tJuegoSec, color, mayor->pieza, mayor->m->movimiento.x, mayor->m->movimiento.y)) {
+							mayor = &l[i];
+						}
+					}
+				}
+			}
+			if (mayor != NULL) {
+				//realizar movimiento en tablero tJuegoSec
+				realizarMov(tJuegoSec, mayor);
+				//liberar la memoria
+				float res = t.getValor(tJuegoSec, color, mayor->pieza, mayor->m->movimiento.x, mayor->m->movimiento.y);
+				delete l;
+				delete mayor;
+				//devolver la funcion con cont--, tablero actualizado, color*-1
+				return res + fBackTraking(cont--,tJuegoSec,color*-1);
+			}
+			else {
+				return -9000.0;
+			}
+		}
+		else {
+			return -9000.0;
+		}
+		
+	}
 }
 movpiezas fGeneral() {
 

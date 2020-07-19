@@ -415,6 +415,28 @@ public:
 			for (int s = 0; s < N; s++)
 				n[i][s] = v[i][s];
 	}
+	/*
+		pieza del tablero de juego valor de -6 a 6 menos 0
+		para la tabla de blancos =1 | negro -1
+	*/
+	float getValor(int mJuego[N][N], int color, int pieza,int x, int y) {
+		float temp[N][N];
+		
+		int vPieza = 0;
+		switch (abs(pieza))
+		{
+		case 1: {vPieza=10; copiarMatriz(temp,vpeon); break; }
+		case 2: {vPieza = 50; copiarMatriz(temp, vtorre); break;}
+		case 3: {vPieza = 30; copiarMatriz(temp, vcaballo); break; }
+		case 4: {vPieza = 30; copiarMatriz(temp, valfil); break; }
+		case 5: {vPieza = 90; copiarMatriz(temp, vreina); break; }
+		case 6: {vPieza = 900; copiarMatriz(temp, vrey); break; }
+		default: 
+			break;
+		}
+		mejorarMapa(temp, mJuego, color, vPieza);
+		return temp[y][x]*(float)vPieza;
+	}
 
 };
 
