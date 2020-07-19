@@ -43,6 +43,9 @@ void actTabV() {
 		}
 	}
 }
+void acTabV(int a[N][N],int b[N][N]) {
+
+}
 /*
 	requisitos del algoritmo
 	1)	Que te permita escoger un movimiento de todos los permitidos
@@ -143,14 +146,14 @@ pos getPila(pilaMov& p) {
 }
 
 
-void generarListaDeMovimientos(movpiezas lista[], int color) { //color a seleccionar blanco=-1, negro=1
+void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //color a seleccionar blanco=-1, negro=1
 	int cont = 0;
 	for (int i = 0; i < LONGITUD; i++) {
 		for (int s = 0; s < LONGITUD; s++) {
-			if (tablero[i][s] * color > 0) {
+			if (t[i][s] * color > 0) {
 				lista[cont].act.x = s; //tablero[y][x];
 				lista[cont].act.y = i;
-				switch (abs(tablero[i][s])) {
+				switch (abs(t[i][s])) {
 				case PEON: {
 					
 
@@ -187,45 +190,12 @@ void generarListaDeMovimientos(movpiezas lista[], int color) { //color a selecci
 		}
 	}
 }
+/*
+	cont = contador de profundidad
+*/
+void fBackTraking(movpiezas p,int cont,int tJuegoSec,int ){
 
-/*
-	Tablas De Posiciones (se descarta las tablas variables, ahora seran tablas fijas)
-*/
-/*float tabPPeon[8][8]
-  { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
-	1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0,
-	0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0,
-	0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5,
-	0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5, };
-float tabPCaballo[8][8]
-{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
-  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
-  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
-  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
-  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
-float tabPPeon[8][8]
-{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
-  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
-  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
-  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
-  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
-float tabPPeon[8][8]
-{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
-  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
-  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
-  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
-  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };
-float tabPPeon[8][8]
-{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-  5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
-  1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0
-  0.0, 0.0, 0.0, 2.0, 2.0, 0.0, 0.0, 0.0
-  0.5,-0.5,-1.0, 0.0, 0.0,-1.0,-0.5, 0.5
-  0.5, 1.0, 1.0,-2.0,-2.0, 1.0, 1.0, 0.5 };*/
-/*
-	Actualiza Las Tablas Posicion de las demas 
-*/
+}
+movpiezas fGeneral() {
+
+}
