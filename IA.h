@@ -51,8 +51,22 @@ void actTabV() {
 		}
 	}
 }
+/*
+	A -> tabla de juego normal
+	B -> tabla con valores de juego;
+*/
 void acTabV(int a[N][N],int b[N][N]) {
-
+	for (int i = 0; i < 8; i++) {
+		for (int s = 0; s < 8; s++) {
+			switch (abs(a[i][s])) { //valor absoluto de la casilla en el tablero original 
+			case 1: case 3: case 4: b[i][s] = a[i][s] * 10; break; //PEON CABALLO ALFIL 
+			case 2: b[i][s] = a[i][s] * 25; break; //TORRE
+			case 5: b[i][s] = (a[i][s] / 5) * 90; break; // REINA
+			case 6: b[i][s] = (a[i][s] / 6) * 900; break; //REY 
+			default: break;
+			}
+		}
+	}
 }
 /*
 	requisitos del algoritmo
@@ -175,15 +189,15 @@ int numPiezas(int color, int t[N][N]) {
 	}
 	return sum;
 }
-void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //color a seleccionar blanco=-1, negro=1
+void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //color a seleccionar blanco=-1, negro=1
 	int cont = 0;
 	for (int i = 0; i < LONGITUD; i++) {
 		for (int s = 0; s < LONGITUD; s++) {
-			if (t[i][s] * color > 0) { 
+			if (t[i][s] * color > 0) {
 				lista[cont].act.x = s; //tablero[y][x];
 				lista[cont].act.y = i;
+				pilaMov movimiento = new mov;
 				switch (abs(t[i][s])) { //falta los movimientos para las blancas y usar como tablero en int t[N][N]
-					pilaMov movimiento = new mov;
 				case PEON: {
 					lista[cont].pieza = PEON * color;
 					int movcolor = 0;
@@ -213,7 +227,7 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						movcolor = 6;
 					}
 					if (i == movcolor && (s == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8)) {
-						if (t[i + (2*color)][s] == 0) {
+						if (t[i + (2 * color)][s] == 0) {
 							aniadirJugada(s, i + 2, movimiento);
 						}
 
@@ -221,7 +235,7 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					lista[cont].m = movimiento;
 					break;
 				};
-				case TORRE: { 
+				case TORRE: {
 					lista[cont].pieza = TORRE * color;
 					for (int x = s - 1; x >= 0; x--) // a la izq.
 					{
@@ -244,8 +258,8 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 							{
 								break;
 							}
-            }
-					  }
+						}
+					}
 					for (int y = i - 1; y >= 0; y--) // arriba
 					{
 
@@ -697,13 +711,12 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					lista[cont].m = movimiento;
 					break;
 				};
-
 				case REY: {
 					lista[cont].pieza = REY * color;
 					for (int y = -1; y <= 1; y++) {
 						for (int x = -1; x <= 1; x++) {
 							if ((i + y >= 0 && i + y < LONGITUD) && (s + x >= 0 && s + x < LONGITUD)) {
-								if(color == 1){
+								if (color == 1) {
 									if (t[i + y][s + x] <= 0) {
 										aniadirJugada(s + x, i + y, movimiento);
 									}
@@ -715,10 +728,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 								}
 							}
 						}
-					lista[cont].m = movimiento;
-					break;
-					};
-				delete movimiento;
+						lista[cont].m = movimiento;
+						break;
+					}
+					delete movimiento;
+				}
 				}
 				cont++;
 			}
@@ -772,8 +786,7 @@ void limpiarLPiezas(lPiezas &l, lPiezas &excep) {
 				l = NULL;
 				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
 			}
-		}
-		else {
+		}else {
 			try
 			{
 				lPiezas temp = new movpiezas;
@@ -789,7 +802,10 @@ void limpiarLPiezas(lPiezas &l, lPiezas &excep) {
 		}
 	}
 }
-void limpiarLPiezas(lPiezas& l, lPiezas& excep) {
+/*
+	Excep como null si solo quiere eliminar todo los elementos de la pila
+*/
+void limpiarpilaMov(pilaMov& l, pilaMov& excep) {
 	while (l != NULL) {
 		if (excep != NULL && l == excep) {
 			try
@@ -815,7 +831,7 @@ void limpiarLPiezas(lPiezas& l, lPiezas& excep) {
 		else {
 			try
 			{
-				lPiezas temp = new movpiezas;
+				pilaMov temp = new mov;
 				temp = l;
 				l = l->sgte;
 				delete temp;
@@ -826,12 +842,41 @@ void limpiarLPiezas(lPiezas& l, lPiezas& excep) {
 				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
 			}
 		}
+		l = excep;
+	}
+}
+void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
+	if (p != NULL) {
+		try
+		{
+			TabP t;
+			pilaMov mayor = p->m;
+			pilaMov temp=p->m->sgte;
+			while (temp != NULL) {
+				if (t.getValor(tJuego, color, p->pieza, temp->movimiento.x, temp->movimiento.y) > t.getValor(tJuego, color, p->pieza, mayor->movimiento.x, mayor->movimiento.y))
+					mayor = temp;
+				temp = temp->sgte;
+			}
+			limpiarpilaMov(p->m, mayor);
+		}
+		catch (const std::exception&)
+		{
+			p->m = NULL;
+		}
 	}
 }
 
 void realizarMov(int t[N][N], lPiezas m) {
 	if (abs(m->pieza) == 6 && (m->act.x+2== m->m->movimiento.x || m->act.x - 2 == m->m->movimiento.x)) {
-
+		if (m->m->movimiento.x > m->act.x) {
+			t[m->act.y][m->act.x + 1] = t[m->act.y][7];
+			t[m->act.y][7] = 0;
+		}
+		else {
+			t[m->act.y][m->act.x - 1] = t[m->act.y][0];
+			t[m->act.y][0] = 0;
+		}
+			
 	}
 	t[m->act.y][m->act.x] = 0;
 	t[m->m->movimiento.y][m->m->movimiento.x] = m->pieza;
@@ -849,11 +894,14 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 		if (num > 1) {
 			lPiezas l = new movpiezas[num];
 			lPiezas mayor = new movpiezas;
+			lPiezas temp;
 			mayor->m = NULL;
 			TabP t;
-			//adaptar obtener movimientos
+			generarListaDeMovimientos(l,color,tJuegoSec);//adaptar obtener movimientos
 			for (int i = 0; i < num; i++) {
 				if (l[i].m != NULL) {
+					temp = &l[i];
+					obtenerMejorMovdePieza(tJuegoSec, temp, color);
 					if (mayor == NULL) {
 						mayor = &l[i];
 					}
@@ -884,6 +932,6 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 		
 	}
 }
-movpiezas fGeneral() {
-
+void fGeneral(){
+	//funcion donde debemos analizar los posibles casos dentro de la tabla 
 }
