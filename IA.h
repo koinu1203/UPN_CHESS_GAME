@@ -179,27 +179,27 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 	int cont = 0;
 	for (int i = 0; i < LONGITUD; i++) {
 		for (int s = 0; s < LONGITUD; s++) {
-			if (t[i][s] * color > 0) {
+			if (t[i][s] * color > 0) { 
 				lista[cont].act.x = s; //tablero[y][x];
 				lista[cont].act.y = i;
-				switch (abs(t[i][s])) {
-          pilaMov movimiento = new mov;
+				switch (abs(t[i][s])) { //falta los movimientos para las blancas y usar como tablero en int t[N][N]
+					pilaMov movimiento = new mov;
 				case PEON: {
 					lista[cont].pieza = PEON;
 					if (color == 1) {
-						if (tablero[i + 1][s] == 0) {
+						if (t[i + 1][s] == 0) {
 							aniadirJugada(s, i + 1, movimiento);
 						}
 						if (i == 1 && (s == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8)){
-							if (tablero[i + 2][s] == 0) {
+							if (t[i + 2][s] == 0) {
 								aniadirJugada(s, i + 2, movimiento);
 							}
 
 						}
-						if (tablero[i + 1][s - 1] < 0) {
+						if (t[i + 1][s - 1] < 0) {
 							aniadirJugada(s - 1, i + 1, movimiento);
 						}
-						if (tablero[i + 1][s + 1] < 0) {
+						if (t[i + 1][s + 1] < 0) {
 							aniadirJugada(s+1, i + 1, movimiento);
 						}
 					}
@@ -210,44 +210,44 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					lista[cont].pieza = TORRE;
 					for (int x = s - 1; x >= 0; x--) // a la izq.
 					{
-						if (tablero[i][x] <= 0)
+						if (t[i][x] <= 0)
 						{
 							aniadirJugada(x, i, movimiento);
 						}
-						else if (tablero[i][x] != 0)
+						else if (t[i][x] != 0)
 						{
 							break;
 						}
 					}
 					for (int y = i - 1; y >= 0; y--) // arriba
 					{
-						if (tablero[y][s] <= 0)
+						if (t[y][s] <= 0)
 						{
 							aniadirJugada(s, y, movimiento);
 						}
-						else if (tablero[y][s] != 0)
+						else if (t[y][s] != 0)
 						{
 							break;
 						}
 					}
 					for (int x = s + 1; x <= 7; x++) // a la der.
 					{
-						if (tablero[i][x] <= 0)
+						if (t[i][x] <= 0)
 						{
 							aniadirJugada(x, i, movimiento);
 						}
-						else if (tablero[i][x] != 0)
+						else if (t[i][x] != 0)
 						{
 							break;
 						}
 					}
 					for (int y = i + 1; y <= 7; y++) // abajo
 					{
-						if (tablero[y][s] <= 0)
+						if (t[y][s] <= 0)
 						{
 							aniadirJugada(s, y, movimiento);
 						}
-						else if (tablero[y][s] != 0)
+						else if (t[y][s] != 0)
 						{
 							break;
 						}
@@ -446,7 +446,7 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					lista[cont].m = movimiento;
 					break;
 				};
-				case REY: {
+				case REY: { // validacion de enroque 
 					lista[cont].pieza = REY;
 					for (int y = -1; y <= 1; y++) {
 						for (int x = -1; x <= 1; x++) {
