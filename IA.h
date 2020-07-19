@@ -179,40 +179,41 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 	int cont = 0;
 	for (int i = 0; i < LONGITUD; i++) {
 		for (int s = 0; s < LONGITUD; s++) {
-			if (t[i][s] * color > 0) {
+			if (t[i][s] * color > 0) { 
 				lista[cont].act.x = s; //tablero[y][x];
 				lista[cont].act.y = i;
-				switch (abs(tablero[i][s])) {
+				switch (abs(t[i][s])) { //falta los movimientos para las blancas y usar como tablero en int t[N][N]
 					pilaMov movimiento = new mov;
 				case PEON: {
 					lista[cont].pieza = PEON * color;
 					int movcolor = 0;
 					if (color == 1) {
-						if (tablero[i + color][s - 1] < 0) {
+						if (t[i + color][s - 1] < 0) {
 							aniadirJugada(s + color, i + 1, movimiento);
 						}
-						if (tablero[i + color][s + 1] < 0) {
+						if (t[i + color][s + 1] < 0) {
 							aniadirJugada(s + color, i + 1, movimiento);
 						}
-						if (tablero[i + color][s] == 0) {
+						if (t[i + color][s] == 0) {
 							aniadirJugada(s, i + color, movimiento);
 						}
 						movcolor = 1;
 					}
 					else {
-						if (tablero[i + color][s - 1] > 0) {
+						if (t[i + color][s - 1] > 0) {
 							aniadirJugada(s + color, i - 1, movimiento);
 						}
-						if (tablero[i + color][s + 1] > 0) {
+						if (t[i + color][s + 1] > 0) {
 							aniadirJugada(s + color, i - 1, movimiento);
+
 						}
-						if (tablero[i + color][s] == 0) {
+						if (t[i + color][s] == 0) {
 							aniadirJugada(s, i + color, movimiento);
 						}
 						movcolor = 6;
 					}
 					if (i == movcolor && (s == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8)) {
-						if (tablero[i + (2*color)][s] == 0) {
+						if (t[i + (2*color)][s] == 0) {
 							aniadirJugada(s, i + 2, movimiento);
 						}
 
@@ -225,44 +226,45 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					for (int x = s - 1; x >= 0; x--) // a la izq.
 					{
 						if (color == 1) {
-							if (tablero[i][x] <= 0)
+							if (t[i][x] <= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
 						}
 						if (color == -1) {
-							if (tablero[i][x] >= 0)
+							if (t[i][x] >= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
-						}
-					}
+            }
+					  }
 					for (int y = i - 1; y >= 0; y--) // arriba
 					{
+
 						if (color == 1) {
-							if (tablero[y][s] <= 0)
+							if (t[y][s] <= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
 						}
 						if (color == -1) {
-							if (tablero[y][s] >= 0)
+							if (t[y][s] >= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
@@ -270,22 +272,23 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					}
 					for (int x = s + 1; x <= 7; x++) // a la der.
 					{
+
 						if (color == 1) {
-							if (tablero[i][x] <= 0)
+							if (t[i][x] <= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
 						}
 						if (color == -1) {
-							if (tablero[i][x] >= 0)
+							if (t[i][x] >= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
@@ -293,22 +296,23 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					}
 					for (int y = i + 1; y <= 7; y++) // abajo
 					{
+
 						if (color == 1) {
-							if (tablero[y][s] <= 0)
+							if (t[y][s] <= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
 						}
 						if (color == -1) {
-							if (tablero[y][s] >= 0)
+							if (t[y][s] >= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
@@ -323,56 +327,56 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					//quizá esto cause error, revisar luego.
 					//lo indicaré aquí		       vv 
 					if (color == 1) {
-						if (tablero[i - 2][s - 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i - 2][s - 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
 							aniadirJugada(s - 1, i - 2, movimiento);
 						}
-						if (tablero[i - 2][s + 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i - 2][s + 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i - 2, movimiento);
 						}
-						if (tablero[i + 2][s - 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i + 2][s - 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
 							aniadirJugada(s - 1, i + 2, movimiento);
 						}
-						if (tablero[i + 2][s + 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i + 2][s + 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i + 2, movimiento);
 						}
 						///
-						if (tablero[i - 1][s - 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i - 1][s - 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
 							aniadirJugada(s - 2, i - 1, movimiento);
 						}
-						if (tablero[i - 1][s + 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i - 1][s + 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i - 1, movimiento);
 						}
-						if (tablero[i + 1][s - 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i + 1][s - 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
 							aniadirJugada(s - 2, i + 1, movimiento);
 						}
-						if (tablero[i + 1][s + 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i + 1][s + 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i + 1, movimiento);
 						}
 					}
 					if (color == -1) {
-						if (tablero[i - 2][s - 1] >= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i - 2][s - 1] >= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
 							aniadirJugada(s - 1, i - 2, movimiento);
 						}
-						if (tablero[i - 2][s + 1] >= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i - 2][s + 1] >= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i - 2, movimiento);
 						}
-						if (tablero[i + 2][s - 1] >= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i + 2][s - 1] >= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
 							aniadirJugada(s - 1, i + 2, movimiento);
 						}
-						if (tablero[i + 2][s + 1] >= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i + 2][s + 1] >= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i + 2, movimiento);
 						}
 						///
-						if (tablero[i - 1][s - 2] >= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i - 1][s - 2] >= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
 							aniadirJugada(s - 2, i - 1, movimiento);
 						}
-						if (tablero[i - 1][s + 2] >= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i - 1][s + 2] >= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i - 1, movimiento);
 						}
-						if (tablero[i + 1][s - 2] >= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i + 1][s - 2] >= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
 							aniadirJugada(s - 2, i + 1, movimiento);
 						}
-						if (tablero[i + 1][s + 2] >= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i + 1][s + 2] >= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i + 1, movimiento);
 						}
 					}
@@ -385,11 +389,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						int x = s - 1;
 						for (int y = i - 1; y >= 0; y--) // diagonal der. arriba
 						{
-							if (tablero[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
+							if (t[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -398,11 +402,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i - 1; y >= 0; y--) // diagonal izq. arriba
 						{
-							if (tablero[y][x] <= 0 && (x < LONGITUD && y >= 0))
+							if (t[y][x] <= 0 && (x < LONGITUD && y >= 0))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -411,11 +415,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s - 1;
 						for (int y = i + 1; y < LONGITUD; y++) // diagonal izq. abajo
 						{
-							if (tablero[y][x] <= 0 && (x >= 0 && y < LONGITUD))
+							if (t[y][x] <= 0 && (x >= 0 && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -424,11 +428,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i + 1; y < LONGITUD; y++)  // diagonal der. abajo
 						{
-							if (tablero[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
+							if (t[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -439,11 +443,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						int x = s - 1;
 						for (int y = i - 1; y >= 0; y--) // diagonal der. arriba
 						{
-							if (tablero[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
+							if (t[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -452,11 +456,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i - 1; y >= 0; y--) // diagonal izq. arriba
 						{
-							if (tablero[y][x] >= 0 && (x < LONGITUD && y >= 0))
+							if (t[y][x] >= 0 && (x < LONGITUD && y >= 0))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -465,11 +469,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s - 1;
 						for (int y = i + 1; y < LONGITUD; y++) // diagonal izq. abajo
 						{
-							if (tablero[y][x] >= 0 && (x >= 0 && y < LONGITUD))
+							if (t[y][x] >= 0 && (x >= 0 && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -478,11 +482,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i + 1; y < LONGITUD; y++)  // diagonal der. abajo
 						{
-							if (tablero[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
+							if (t[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -497,44 +501,44 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					if (color == 1) {
 						for (int x = s - 1; x >= 0; x--) // a la izq.
 						{
-							if (tablero[i][x] <= 0)
+							if (t[i][x] <= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
 						}
 						for (int y = i - 1; y >= 0; y--) // arriba
 						{
-							if (tablero[y][s] <= 0)
+							if (t[y][s] <= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
 						}
 						for (int x = s + 1; x <= 7; x++) // a la der.
 						{
-							if (tablero[i][x] <= 0)
+							if (t[i][x] <= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
 						}
 						for (int y = i + 1; y <= 7; y++) // abajo
 						{
-							if (tablero[y][s] <= 0)
+							if (t[y][s] <= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
@@ -542,11 +546,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						int x = s - 1;
 						for (int y = i - 1; y >= 0; y--) // arriba a la izq.
 						{
-							if (tablero[y][x] <= 0 && (x >= 0 && y >= 0))
+							if (t[y][x] <= 0 && (x >= 0 && y >= 0))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -555,11 +559,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i - 1; y >= 0; y--) // arriba a la der.
 						{
-							if (tablero[y][x] <= 0 && (x < LONGITUD && y >= 0))
+							if (t[y][x] <= 0 && (x < LONGITUD && y >= 0))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -568,11 +572,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s - 1;
 						for (int y = i + 1; y <= 7; y++) // abajo a la izq.
 						{
-							if (tablero[y][x] <= 0 && (x >= 0 && y < LONGITUD))
+							if (t[y][x] <= 0 && (x >= 0 && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -581,11 +585,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i + 1; y <= 7; y++)  // abajo a la der.
 						{
-							if (tablero[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
+							if (t[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -595,44 +599,44 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					if (color == -1) {
 						for (int x = s - 1; x >= 0; x--) // a la izq.
 						{
-							if (tablero[i][x] >= 0)
+							if (t[i][x] >= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
 						}
 						for (int y = i - 1; y >= 0; y--) // arriba
 						{
-							if (tablero[y][s] >= 0)
+							if (t[y][s] >= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
 						}
 						for (int x = s + 1; x <= 7; x++) // a la der.
 						{
-							if (tablero[i][x] >= 0)
+							if (t[i][x] >= 0)
 							{
 								aniadirJugada(x, i, movimiento);
 							}
-							else if (tablero[i][x] != 0)
+							else if (t[i][x] != 0)
 							{
 								break;
 							}
 						}
 						for (int y = i + 1; y <= 7; y++) // abajo
 						{
-							if (tablero[y][s] >= 0)
+							if (t[y][s] >= 0)
 							{
 								aniadirJugada(s, y, movimiento);
 							}
-							else if (tablero[y][s] != 0)
+							else if (t[y][s] != 0)
 							{
 								break;
 							}
@@ -640,11 +644,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						int x = s - 1;
 						for (int y = i - 1; y >= 0; y--) // arriba a la izq.
 						{
-							if (tablero[y][x] >= 0 && (x >= 0 && y >= 0))
+							if (t[y][x] >= 0 && (x >= 0 && y >= 0))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -653,11 +657,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i - 1; y >= 0; y--) // arriba a la der.
 						{
-							if (tablero[y][x] >= 0 && (x < LONGITUD && y >= 0))
+							if (t[y][x] >= 0 && (x < LONGITUD && y >= 0))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -666,11 +670,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s - 1;
 						for (int y = i + 1; y <= 7; y++) // abajo a la izq.
 						{
-							if (tablero[y][x] >= 0 && (x >= 0 && y < LONGITUD))
+							if (t[y][x] >= 0 && (x >= 0 && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -679,11 +683,11 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 						x = s + 1;
 						for (int y = i + 1; y <= 7; y++)  // abajo a la der.
 						{
-							if (tablero[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
+							if (t[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
 							{
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (tablero[y][x] != 0)
+							else if (t[y][x] != 0)
 							{
 								break;
 							}
@@ -693,18 +697,19 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 					lista[cont].m = movimiento;
 					break;
 				};
+
 				case REY: {
 					lista[cont].pieza = REY * color;
 					for (int y = -1; y <= 1; y++) {
 						for (int x = -1; x <= 1; x++) {
 							if ((i + y >= 0 && i + y < LONGITUD) && (s + x >= 0 && s + x < LONGITUD)) {
 								if(color == 1){
-									if (tablero[i + y][s + x] <= 0) {
+									if (t[i + y][s + x] <= 0) {
 										aniadirJugada(s + x, i + y, movimiento);
 									}
 								}
 								if (color == -1) {
-									if (tablero[i + y][s + x] >= 0) {
+									if (t[i + y][s + x] >= 0) {
 										aniadirJugada(s + x, i + y, movimiento);
 									}
 								}
