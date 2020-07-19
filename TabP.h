@@ -75,7 +75,7 @@ public:
 
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores 
-		son de -1 donde como la pieza y +10/vPieza en la posicion original 
+		son de -1 donde como la pieza y +10/vPieza en la posicion original (mPieza[y][x])
 	*/
 	void clavarpeon(float mPieza[N][N], int x, int y,int vPieza,int color) {
 		if (x != 0 && x != N - 1) {
@@ -94,7 +94,7 @@ public:
 	}
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
-		son de -1 donde como la pieza y +50/vPieza en la posicion original
+		son de -1 donde como la pieza y +50/vPieza en la posicion original(mPieza[y][x])
 	*/
 	void clavarTorre(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		for (int i = x; i < N; i++) {
@@ -145,7 +145,7 @@ public:
 	}
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
-		son de -1 donde como la pieza y +30/vPieza en la posicion original
+		son de -1 donde como la pieza y +30/vPieza en la posicion original(mPieza[y][x])
 	*/
 	void clavarCaballo(float mPieza[N][N], int x, int y, int vPieza) {
 		if (y - 2 >= 0) {
@@ -177,7 +177,7 @@ public:
 	}
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
-		son de -1 donde como la pieza y +30/vPieza en la posicion original
+		son de -1 donde como la pieza y +30/vPieza en la posicion original(mPieza[y][x])
 	*/
 	void clavarAlfil(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		int s = x;
@@ -236,7 +236,7 @@ public:
 	}
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
-		son de -1 donde como la pieza y +90/vPieza en la posicion original
+		son de -1 donde como la pieza y +90/vPieza en la posicion original(mPieza[y][x])
 	*/
 	void clavarReina(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		for (int i = x; i < N; i++) {
@@ -339,7 +339,7 @@ public:
 	}
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
-		son de -1 donde como la pieza y +900/vPieza en la posicion original
+		son de -1 donde como la pieza y +900/vPieza en la posicion original(mPieza[y][x])
 	*/
 	void clavarRey(float mPieza[N][N], int x, int y, int vPieza) {
 		if (x + 1 >= 0) {
@@ -366,7 +366,10 @@ public:
 	}
 	/*
 		La funcion genera segun las posiciones de las fichas enemigas un mapa de flotantes donde los valores negativos 
-		mPieza=MapadeValores a Mejorar | mJuego=MaparActualDeJuego | color 1=negro -1=blanco | Valor de la pieza en el tablero
+		mPieza=MapadeValores a Mejorar "Recomendable usar una matriz alternativa para no modificar las matrize iniciales" 
+		mJuego=MaparActualDeJuego
+		color enemigo a registrar posiciones 1=negro -1=blanco
+		Valor de la pieza tomada
 	*/
 	void mejorarMapa(float mPieza[N][N], int mJuego[N][N],int color,int vPieza) {
 		for (int i = 0; i < N; i++) {
