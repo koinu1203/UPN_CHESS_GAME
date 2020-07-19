@@ -8,19 +8,25 @@
 #define ALFIL 4 
 #define REINA 5
 #define REY 6 
+
 struct mov { 
 	pos movimiento; 
 	mov* sgte; 
 };
+
 typedef struct mov* pilaMov;
-struct movpiezas {
+
+
+struct movpiezas { //<-
 	pos act; //<-posicion actual
 	pilaMov m; //<-es un puntero que determinara los movimientos posibles de la pieza, si el puntero esta en null entonces no existen movimientos pasa esa pieza
 	int pieza;//<-
 	movpiezas* sgte;
 };
+
 typedef struct movpiezas* lPiezas;
 int tabV[8][8]; //tablero de valor contendra los valores de las fichas en tiempo real 
+
 /*
 	-BLANCO / +NEGRO
 	PEON = 10
@@ -51,7 +57,7 @@ void acTabV(int a[N][N],int b[N][N]) {
 /*
 	requisitos del algoritmo
 	1)	Que te permita escoger un movimiento de todos los permitidos
-	2)	Escoger el movimiento que de mayor valor, ac� entra en juego
+	2)	Escoger el movimiento que de mayor valor, acá entra en juego
 		el tabV o tablero de valor (asegurarse de actualizar el tablero)
 	3)	Saber si la jugada escogida a futuro (pensando un turno luego)
 		es la mejor
@@ -90,8 +96,8 @@ int tablero[8][8] =
   1, 1, 1, 1, 1, 1, 1, 1,
   0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0,
-  10,10,10,10,10,10,10,10,
-  10,10,10,10,10,10,10,10,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
  -1,-1,-1,-1,-1,-1,-1,-1,
  -2,-3,-4,-5,-6,-4,-3,-2, }
 */
@@ -147,6 +153,14 @@ pos getPila(pilaMov& p) {
 	}
 }
 
+
+void aniadirJugada(int x, int y, pilaMov pilamovi) {
+	pos posi;
+	posi.x = x;
+	posi.y = y;
+	addPila(pilamovi, posi);
+}
+
 /*
 	Blanco=-1 | Negro=1
 */
@@ -169,36 +183,284 @@ void generarListaDeMovimientos(movpiezas lista[], int color,int t[N][N]) { //col
 				lista[cont].act.x = s; //tablero[y][x];
 				lista[cont].act.y = i;
 				switch (abs(t[i][s])) {
+          pilaMov movimiento = new mov;
 				case PEON: {
-					
+					lista[cont].pieza = PEON;
+					if (color == 1) {
+						if (tablero[i + 1][s] == 0) {
+							aniadirJugada(s, i + 1, movimiento);
+						}
+						if (i == 1 && (s == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8)){
+							if (tablero[i + 2][s] == 0) {
+								aniadirJugada(s, i + 2, movimiento);
+							}
 
+						}
+						if (tablero[i + 1][s - 1] < 0) {
+							aniadirJugada(s - 1, i + 1, movimiento);
+						}
+						if (tablero[i + 1][s + 1] < 0) {
+							aniadirJugada(s+1, i + 1, movimiento);
+						}
+					}
+					lista[cont].m = movimiento;
 					break;
 				};
-				case TORRE: {
-
-
+				case TORRE: { 
+					lista[cont].pieza = TORRE;
+					for (int x = s - 1; x >= 0; x--) // a la izq.
+					{
+						if (tablero[i][x] <= 0)
+						{
+							aniadirJugada(x, i, movimiento);
+						}
+						else if (tablero[i][x] != 0)
+						{
+							break;
+						}
+					}
+					for (int y = i - 1; y >= 0; y--) // arriba
+					{
+						if (tablero[y][s] <= 0)
+						{
+							aniadirJugada(s, y, movimiento);
+						}
+						else if (tablero[y][s] != 0)
+						{
+							break;
+						}
+					}
+					for (int x = s + 1; x <= 7; x++) // a la der.
+					{
+						if (tablero[i][x] <= 0)
+						{
+							aniadirJugada(x, i, movimiento);
+						}
+						else if (tablero[i][x] != 0)
+						{
+							break;
+						}
+					}
+					for (int y = i + 1; y <= 7; y++) // abajo
+					{
+						if (tablero[y][s] <= 0)
+						{
+							aniadirJugada(s, y, movimiento);
+						}
+						else if (tablero[y][s] != 0)
+						{
+							break;
+						}
+					}
+					lista[cont].m = movimiento;
 					break;
 				};
-				case CABALLO: {
-
-
+				case CABALLO: { //riesgo de causar error, revisar luego...
+					lista[cont].pieza = CABALLO;
+					//intenté hacer que verifique si la posición que está verificando, es una posición valida dentro del tablero,
+					//quizá esto cause error, revisar luego.
+					//lo indicaré aquí		       vv 
+					if (tablero[i - 2][s - 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						aniadirJugada(s - 1, i - 2, movimiento);
+					}
+					if (tablero[i - 2][s + 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						aniadirJugada(s + 1, i - 2, movimiento);
+					}
+					if (tablero[i + 2][s - 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						aniadirJugada(s - 1, i + 2, movimiento);
+					}
+					if (tablero[i + 2][s + 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						aniadirJugada(s + 1, i + 2, movimiento);
+					}
+					///
+					if (tablero[i - 1][s - 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						aniadirJugada(s - 2, i - 1, movimiento);
+					}
+					if (tablero[i - 1][s + 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						aniadirJugada(s + 2, i - 1, movimiento);
+					}
+					if (tablero[i + 1][s - 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						aniadirJugada(s - 2, i + 1, movimiento);
+					}
+					if (tablero[i + 1][s + 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						aniadirJugada(s + 2, i + 1, movimiento);
+					}
+					lista[cont].m = movimiento;
 					break;
 				};
 				case ALFIL: {
-
-
+					lista[cont].pieza = ALFIL;
+					int x = s - 1;
+					for (int y = i - 1; y >= 0; y--) // diagonal der. arriba
+					{
+						if (tablero[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x--;
+					}
+					x = s + 1;
+					for (int y = i - 1; y >= 0; y--) // diagonal izq. arriba
+					{
+						if (tablero[y][x] <= 0 && (x < LONGITUD && y >= 0))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x++;
+					}
+					x = s - 1;
+					for (int y = i + 1; y < LONGITUD; y++) // diagonal izq. abajo
+					{
+						if (tablero[y][x] <= 0 && (x >= 0 && y < LONGITUD))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x--;
+					}
+					x = s + 1;
+					for (int y = i + 1; y < LONGITUD; y++)  // diagonal der. abajo
+					{
+						if (tablero[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x++;
+					}
+					lista[cont].m = movimiento;
 					break;
 				};
 				case REINA: {
-
-
+					lista[cont].pieza = REINA;
+					for (int x = s - 1; x >= 0; x--) // a la izq.
+					{
+						if (tablero[i][x] <= 0)
+						{
+							aniadirJugada(x, i, movimiento);
+						}
+						else if (tablero[i][x] != 0)
+						{
+							break;
+						}
+					}
+					for (int y = i - 1; y >= 0; y--) // arriba
+					{
+						if (tablero[y][s] <= 0)
+						{
+							aniadirJugada(s, y, movimiento);
+						}
+						else if (tablero[y][s] != 0)
+						{
+							break;
+						}
+					}
+					for (int x = s + 1; x <= 7; x++) // a la der.
+					{
+						if (tablero[i][x] <= 0)
+						{
+							aniadirJugada(x, i, movimiento);
+						}
+						else if (tablero[i][x] != 0)
+						{
+							break;
+						}
+					}
+					for (int y = i + 1; y <= 7; y++) // abajo
+					{
+						if (tablero[y][s] <= 0)
+						{
+							aniadirJugada(s, y, movimiento);
+						}
+						else if (tablero[y][s] != 0)
+						{
+							break;
+						}
+					}
+					int x = s - 1;
+					for (int y = i - 1; y >= 0; y--) // arriba a la izq.
+					{
+						if (tablero[y][x] <= 0 && (x >= 0 && y >= 0))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x--;
+					}
+					x = s + 1;
+					for (int y = i - 1; y >= 0; y--) // arriba a la der.
+					{
+						if (tablero[y][x] <= 0 && (x < LONGITUD && y >= 0))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x++;
+					}
+					x = s - 1;
+					for (int y = i + 1; y <= 7; y++) // abajo a la izq.
+					{
+						if (tablero[y][x] <= 0 && (x >= 0 && y < LONGITUD))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x--;
+					}
+					x = s + 1;
+					for (int y = i + 1; y <= 7; y++)  // abajo a la der.
+					{
+						if (tablero[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
+						{
+							aniadirJugada(x, y, movimiento);
+						}
+						else if (tablero[y][x] != 0)
+						{
+							break;
+						}
+						x++;
+					}
+					lista[cont].m = movimiento;
 					break;
 				};
 				case REY: {
-
-
+					lista[cont].pieza = REY;
+					for (int y = -1; y <= 1; y++) {
+						for (int x = -1; x <= 1; x++) {
+							if ((i + y >= 0 && i + y < LONGITUD) && (s + x >= 0 && s + x < LONGITUD)) {
+								if (tablero[i + y][s + x] <= 0) {
+									aniadirJugada(s + x, i + y, movimiento);
+								}
+							}
+						}
+					}
+					lista[cont].m = movimiento;
 					break;
 				};
+				delete movimiento;
 				}
 				cont++;
 			}
