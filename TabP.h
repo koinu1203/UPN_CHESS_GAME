@@ -5,6 +5,10 @@
 class TabP
 {
 public:
+	/*
+		Matrices iniciales
+	*/
+
 
 	float vpeon[N][N]{
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
@@ -65,10 +69,13 @@ public:
    -1.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-1.0,
 	2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0,
 	2.0, 3.0, 1.0, 0.0, 0.0, 1.0, 3.0, 2.0, };
+	/*
+		fin de matrizes Iniciales
+	*/
 
 	/*
-		Mejora el mapa de la pieza mediante el uso del mapa del juego actual
-		ambas matrizes son de 8x8
+		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores 
+		son de -1 donde como la pieza y +10/vPieza en la posicion original 
 	*/
 	void clavarpeon(float mPieza[N][N], int x, int y,int vPieza,int color) {
 		if (x != 0 && x != N - 1) {
@@ -85,6 +92,10 @@ public:
 		}
 		mPieza[y][x] += (10.0 / (float)vPieza);
 	}
+	/*
+		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
+		son de -1 donde como la pieza y +50/vPieza en la posicion original
+	*/
 	void clavarTorre(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		for (int i = x; i < N; i++) {
 			if (x != i) {
@@ -132,6 +143,10 @@ public:
 		}
 		mPieza[y][x] +=  (50 / (float)vPieza);
 	}
+	/*
+		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
+		son de -1 donde como la pieza y +30/vPieza en la posicion original
+	*/
 	void clavarCaballo(float mPieza[N][N], int x, int y, int vPieza) {
 		if (y - 2 >= 0) {
 			if(x + 1 < N)
@@ -160,6 +175,10 @@ public:
 		}
 		mPieza[y][x] += (30/(float)vPieza);
 	}
+	/*
+		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
+		son de -1 donde como la pieza y +30/vPieza en la posicion original
+	*/
 	void clavarAlfil(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		int s = x;
 		for (int i = y; i < N; i++) {
@@ -215,6 +234,10 @@ public:
 		}
 		mPieza[y][x] += (30/(float)vPieza);
 	}
+	/*
+		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
+		son de -1 donde como la pieza y +90/vPieza en la posicion original
+	*/
 	void clavarReina(float mPieza[N][N], int x, int y, int vPieza, int mJuego[N][N]) {
 		for (int i = x; i < N; i++) {
 			if (x != i) {
@@ -314,6 +337,10 @@ public:
 		}
 		mPieza[y][x] += (90 / (float)vPieza);
 	}
+	/*
+		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
+		son de -1 donde como la pieza y +900/vPieza en la posicion original
+	*/
 	void clavarRey(float mPieza[N][N], int x, int y, int vPieza) {
 		if (x + 1 >= 0) {
 			mPieza[y][x + 1] -= 1.0;
@@ -338,11 +365,13 @@ public:
 		mPieza[y][x] += (900/(float)vPieza);
 	}
 	/*
+		La funcion genera segun las posiciones de las fichas enemigas un mapa de flotantes donde los valores negativos 
 		mPieza=MapadeValores a Mejorar | mJuego=MaparActualDeJuego | color 1=negro -1=blanco | Valor de la pieza en el tablero
 	*/
 	void mejorarMapa(float mPieza[N][N], int mJuego[N][N],int color,int vPieza) {
 		for (int i = 0; i < N; i++) {
 			for (int s = 0; s < N; s++) {
+				//multiplica la pieza, recordando que en el tablero original -blanco/+negro
 				if (mJuego[i][s]*color > 0) {
 					//tablero[y][x];
 					switch (abs(mJuego[i][s])) {
@@ -375,26 +404,14 @@ public:
 			}
 		}
 	}
-
+	/*
+		copia una matriz de 8x8(v) en otra de 8x8(n)
+	*/
 	void copiarMatriz(float n[N][N], float v[N][N]) {
 		for (int i = 0; i < N; i++) 
 			for (int s = 0; s < N; s++)
 				n[i][s] = v[i][s];
 	}
 
-	/*
-		Blanco =-1 | Negro =1
-	*/
-	float valorPieza(int x, int y, int color, int mJuego[N][N], float mvPieza[N][N], int vPieza) {
-		float temp[N][N];
-		copiarMatriz(temp, mvPieza);
-		mejorarMapa(temp, mJuego, color, vPieza);
-		if (color > 0) {
-			return temp[abs(y - N - 1)][abs(x - N - 1)];
-		}
-		else {
-			return temp[y][x];
-		}
-	}
 };
 
