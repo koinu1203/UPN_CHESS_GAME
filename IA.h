@@ -259,7 +259,8 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 					//intenté hacer que verifique si la posición que está verificando, es una posición valida dentro del tablero,
 					//quizá esto cause error, revisar luego.
 					//lo indicaré aquí		       vv 
-					if (color == 1) {
+
+					/*if (color == 1) {
 						if (t[i - 2][s - 1] <= 0 && (i - 2 >= 0 && i < LONGITUD) && (s - 1 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 1, i - 2, movimiento);
 						}
@@ -311,6 +312,25 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 						}
 						if (t[i + 1][s + 2] >= 0 && (i>= 0 && i + 1 < LONGITUD) && (s >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i + 1, movimiento);
+						}
+					}*/
+					for (int y = 0; y < N; y++) {
+						for (int x = 0; x < N; x++) {
+							if (x == s && y == i) {
+
+							}
+							else {
+								if (color > 0) {
+									if (movCaballoNegro(s, i, x, y, t) == 1) {
+										aniadirJugada(x, y, movimiento);
+									}
+								}
+								else {
+									if (movCaballoBlanco(s, i, x, y, t) == 1) {
+										aniadirJugada(x, y, movimiento);
+									}
+								}
+							}
 						}
 					}
 					lista[cont].m = movimiento;

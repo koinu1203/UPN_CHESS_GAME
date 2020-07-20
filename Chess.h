@@ -1034,7 +1034,7 @@ int movCaballoBlanco(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
-int movCaballoBlanco(int prevX, int prevY, int nuevoX, int nuevoY,int [8][8])
+int movCaballoBlanco(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
 {
 	if (prevY - 2 >= 0 && prevX - 1 >= 0 && nuevoY == prevY - 2 && nuevoX == prevX - 1 && t[nuevoY][nuevoX] >= 0)
 	{

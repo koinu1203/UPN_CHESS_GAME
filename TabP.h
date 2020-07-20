@@ -79,8 +79,8 @@ public:
 	*/
 	void clavarpeon(float mPieza[N][N], int x, int y,int vPieza,int color) {
 		if (x != 0 && x != N - 1) {
-			mPieza[y + color][x+1] -= 1.0; //derecha
-			mPieza[y + color][x-1] -= 1.0; //izquierda
+			mPieza[y + color][x+1] -= -3.0; //derecha
+			mPieza[y + color][x-1] -= -3.0; //izquierda
 		}
 		else {
 			if (x == 0) {
@@ -100,7 +100,7 @@ public:
 		for (int i = x; i < N; i++) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -= 1.5;
+					mPieza[y][i] -= 2.5;
 				}
 				else {
 					mPieza[y][i] -= 1.5;
@@ -111,7 +111,7 @@ public:
 		for (int i = x; i >= 0; i--) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -=  1.5;
+					mPieza[y][i] -=  2.5;
 				}
 				else {
 					mPieza[y][i] -= 1.5;
@@ -122,7 +122,7 @@ public:
 		for (int i = y; i < N; i++) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 1.5;
+					mPieza[i][x] -= 2.5;
 				}
 				else {
 					mPieza[i][x] -= 1.5;
@@ -133,7 +133,7 @@ public:
 		for (int i = y; i >=0; i--) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 1.5;
+					mPieza[i][x] -= 2.5;
 				}
 				else {
 					mPieza[i][x] -= 1.5;
@@ -243,10 +243,10 @@ public:
 		for (int i = x; i < N; i++) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -= 1.0;
+					mPieza[y][i] -= 0.5;
 				}
 				else {
-					mPieza[y][i] -= 1.0;
+					mPieza[y][i] -= 0.5;
 					break;
 				}
 			}
@@ -254,10 +254,10 @@ public:
 		for (int i = x; i >= 0; i--) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -= 1.0;
+					mPieza[y][i] -= 0.5;
 				}
 				else {
-					mPieza[y][i] -= 1.0;
+					mPieza[y][i] -= 0.5;
 					break;
 				}
 			}
@@ -265,10 +265,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 1.0;
+					mPieza[i][x] -= 0.5;
 				}
 				else {
-					mPieza[i][x] -= 1.0;
+					mPieza[i][x] -= 0.5;
 					break;
 				}
 			}
@@ -276,10 +276,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 1.0;
+					mPieza[i][x] -= 0.5;
 				}
 				else {
-					mPieza[i][x] -= 1.0;
+					mPieza[i][x] -= 0.5;
 					break;
 				}
 			}
@@ -288,10 +288,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (i != y && s<N) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 					break;
 				}
 			}
@@ -301,10 +301,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (i != y && s>=0) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 					break;
 				}
 			}
@@ -314,10 +314,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (i != y && s<N) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 					break;
 				}
 			}
@@ -327,16 +327,16 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (i != y && s>=0) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 0.5;
 					break;
 				}
 			}
 			s--;
 		}
-		mPieza[y][x] += (90 / (float)vPieza);
+		mPieza[y][x] += (150 / (float)vPieza);
 	}
 	/*
 		agrega si puede a la matriz mPiezas valores segun la posicion x, y estos valores
@@ -346,22 +346,22 @@ public:
 		if (x + 1 >= 0) {
 			mPieza[y][x + 1] -= 1.0;
 			if(y-1>=0)
-				mPieza[y -1][x + 1] -= 1.0;//
+				mPieza[y -1][x + 1] -= 0.5;//
 		}
 		if (x - 1 >= 0) {
 			mPieza[y][x - 1] -= 1.0;
 			if (y + 1 < N)
-				mPieza[y + 1][x - 1] -= 1.0;
+				mPieza[y + 1][x - 1] -= 0.5;
 		}
 		if (y + 1 >= 0) {
 			mPieza[y+1][x] -= 1.0;
 			if(x+1<N)
-				mPieza[y + 1][x+1] -= 1.0;
+				mPieza[y + 1][x+1] -= 0.5;
 		}
 		if (y - 1 >= 0) {
 			mPieza[y - 1][x] -= 1.0;
 			if(x-1>=0)
-				mPieza[y - 1][x-1] -= 1.0;
+				mPieza[y - 1][x-1] -= 0.5;
 		}
 		mPieza[y][x] += (900/(float)vPieza);
 	}
