@@ -220,10 +220,10 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 					}
 					else {
 						if (t[i + color][s - 1] > 0) {
-							aniadirJugada(s + color, i - 1, movimiento);
+							aniadirJugada(s -1, i + color, movimiento);
 						}
 						if (t[i + color][s + 1] > 0) {
-							aniadirJugada(s + color, i - 1, movimiento);
+							aniadirJugada(s + 1, i +color, movimiento);
 
 						}
 						if (t[i + color][s] == 0) {
@@ -233,7 +233,7 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 					}
 					if (i == movcolor && (s == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8)) {
 						if (t[i + (2 * color)][s] == 0) {
-							aniadirJugada(s, i + 2, movimiento);
+							aniadirJugada(s, i + (2*color), movimiento);
 						}
 
 					}
@@ -346,56 +346,56 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 					//quizá esto cause error, revisar luego.
 					//lo indicaré aquí		       vv 
 					if (color == 1) {
-						if (t[i - 2][s - 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i - 2][s - 1] <= 0 && (i - 2 >= 0 && i < LONGITUD) && (s - 1 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 1, i - 2, movimiento);
 						}
-						if (t[i - 2][s + 1] <= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i - 2][s + 1] <= 0 && (i - 2 >= 0 && i  < LONGITUD) && (s >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i - 2, movimiento);
 						}
-						if (t[i + 2][s - 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i + 2][s - 1] <= 0 && (i >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s< LONGITUD)) {
 							aniadirJugada(s - 1, i + 2, movimiento);
 						}
-						if (t[i + 2][s + 1] <= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i + 2][s + 1] <= 0 && (i >= 0 && i + 2 < LONGITUD) && (s >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i + 2, movimiento);
 						}
 						///
-						if (t[i - 1][s - 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i - 1][s - 2] <= 0 && (i - 1 >= 0 && i < LONGITUD) && (s - 2 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 2, i - 1, movimiento);
 						}
-						if (t[i - 1][s + 2] <= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i - 1][s + 2] <= 0 && (i - 1 >= 0 && i  < LONGITUD) && (s >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i - 1, movimiento);
 						}
-						if (t[i + 1][s - 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i + 1][s - 2] <= 0 && (i >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 2, i + 1, movimiento);
 						}
-						if (t[i + 1][s + 2] <= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i + 1][s + 2] <= 0 && (i >= 0 && i + 1 < LONGITUD) && (s >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i + 1, movimiento);
 						}
 					}
 					if (color == -1) {
-						if (t[i - 2][s - 1] >= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i - 2][s - 1] >= 0 && (i - 2 >= 0 && i < LONGITUD) && (s - 1 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 1, i - 2, movimiento);
 						}
-						if (t[i - 2][s + 1] >= 0 && (i - 2 >= 0 && i - 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i - 2][s + 1] >= 0 && (i - 2 >= 0 && i < LONGITUD) && (s  >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i - 2, movimiento);
 						}
-						if (t[i + 2][s - 1] >= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s - 1 < LONGITUD)) {
+						if (t[i + 2][s - 1] >= 0 && (i >= 0 && i + 2 < LONGITUD) && (s - 1 >= 0 && s  < LONGITUD)) {
 							aniadirJugada(s - 1, i + 2, movimiento);
 						}
-						if (t[i + 2][s + 1] >= 0 && (i + 2 >= 0 && i + 2 < LONGITUD) && (s + 1 >= 0 && s + 1 < LONGITUD)) {
+						if (t[i + 2][s + 1] >= 0 && (i >= 0 && i + 2 < LONGITUD) && (s  >= 0 && s + 1 < LONGITUD)) {
 							aniadirJugada(s + 1, i + 2, movimiento);
 						}
 						///
-						if (t[i - 1][s - 2] >= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i - 1][s - 2] >= 0 && (i - 1 >= 0 && i < LONGITUD) && (s - 2 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 2, i - 1, movimiento);
 						}
-						if (t[i - 1][s + 2] >= 0 && (i - 1 >= 0 && i - 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i - 1][s + 2] >= 0 && (i - 1 >= 0 && i < LONGITUD) && (s >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i - 1, movimiento);
 						}
-						if (t[i + 1][s - 2] >= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s - 2 < LONGITUD)) {
+						if (t[i + 1][s - 2] >= 0 && (i >= 0 && i + 1 < LONGITUD) && (s - 2 >= 0 && s < LONGITUD)) {
 							aniadirJugada(s - 2, i + 1, movimiento);
 						}
-						if (t[i + 1][s + 2] >= 0 && (i + 1 >= 0 && i + 1 < LONGITUD) && (s + 2 >= 0 && s + 2 < LONGITUD)) {
+						if (t[i + 1][s + 2] >= 0 && (i>= 0 && i + 1 < LONGITUD) && (s >= 0 && s + 2 < LONGITUD)) {
 							aniadirJugada(s + 2, i + 1, movimiento);
 						}
 					}
@@ -736,7 +736,6 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 						lista[cont].m = movimiento;
 						break;
 					}
-					delete movimiento;
 				}
 				}
 				cont++;
@@ -889,8 +888,9 @@ void realizarMov(int t[N][N], lPiezas m) {
 		}
 			
 	}
+	//TABLERO[y][x]
+	t[m->m->movimiento.y][m->m->movimiento.x] = t[m->act.y][m->act.x];
 	t[m->act.y][m->act.x] = 0;
-	t[m->m->movimiento.y][m->m->movimiento.x] = m->pieza;
 }
 
 /*
@@ -898,23 +898,23 @@ void realizarMov(int t[N][N], lPiezas m) {
 	para las blancas= -1
 	para negras = 1;
 */
-int calcularVTablero(int t[8][8]) {
+float calcularVTablero(int t[8][8]) {
 	int sum = 0;
 	for (int i = 0; i < 8; i++) {
-		for (int s = 0; s < 9; s++) {
-			switch (abs(t[y][x]))
+		for (int s = 0; s < 8; s++) {
+			switch (abs(t[i][s]))
 			{
-			case 1: sum = t[y][x]>0? sum+10:sum-10; break;
-			case 2: sum = t[y][x] > 0 ? sum + 50 : sum - 50; break;
+			case 1: sum = t[i][s]>0? sum+10:sum-10; break;
+			case 2: sum = t[i][s] > 0 ? sum + 50 : sum - 50; break;
 			case 3: case 4: sum = t[y][x] > 0 ? sum + 30 : sum - 30; break;
-			case 5: sum = t[y][x] > 0 ? sum + 90 : sum - 90; break; 
-			case 6: sum = t[y][x] > 0 ? sum + 900 : sum - 900; break;
+			case 5: sum = t[i][s] > 0 ? sum + 90 : sum - 90; break; 
+			case 6: sum = t[i][s] > 0 ? sum + 900 : sum - 900; break;
 			default:
 				break;
 			}
 		}
 	}
-	return sum * colorIA;
+	return (float)sum * (float)colorIA;
 }
 /*
 	cont = contador de profundidad
@@ -932,6 +932,8 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 			lPiezas temp;
 			mayor->m = NULL;
 			TabP t;
+			int g[8][8];
+			t.copiarMatriz(g, tJuegoSec);
 			generarListaDeMovimientos(l,color,tJuegoSec);//adaptar obtener movimientos
 			for (int i = 0; i < num; i++) {
 				if (l[i].m != NULL) {
@@ -949,12 +951,14 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 			}
 			if (mayor != NULL) {
 				//realizar movimiento en tablero tJuegoSec
+				t.copiarMatriz(g, tJuegoSec);
 				realizarMov(tJuegoSec, mayor);
+				t.copiarMatriz(g, tJuegoSec);
 				//liberar la memoria
 				delete l;
 				//delete mayor;
 				//devolver la funcion con cont--, tablero actualizado, color*-1
-				return fBackTraking(cont--,tJuegoSec,color*-1);
+				return fBackTraking(cont-1,tJuegoSec,color*-1);
 			}
 			else {
 				return calcularVTablero(tJuegoSec);
@@ -983,9 +987,9 @@ lPiezas fGeneral(int dif){
 	generarListaDeMovimientos(l, colorIA, tab);
 	for (int i = 0; i < n; i++) {
 		if (l[i].m != NULL) {
+			t.copiarMatriz(tab, tablero);
 			if (movEs == NULL) {
 				temp = &l[i];
-				t.copiarMatriz(tab, tablero);
 				obtenerMejorMovdePieza(tab, temp, colorIA);
 				movEs = temp;
 				mayor = fBackTraking(dif, tab, colorIA);
@@ -993,7 +997,6 @@ lPiezas fGeneral(int dif){
 			else
 			{
 				temp = &l[i];
-				t.copiarMatriz(tab, tablero);
 				obtenerMejorMovdePieza(tab, temp, colorIA);
 				realizarMov(tab, temp);
 				if (fBackTraking(dif, tab, colorIA) > mayor) {

@@ -232,7 +232,6 @@ int main()
 								tablero[y][x] = 0;
 							}
 						}
-
 						if (tablero[y][x] == 0)
 						{
 							movimientos = 1;
@@ -535,7 +534,7 @@ int main()
 		ventana.display(); //mostrar ventana
 	}
 
-	int aux[8][8]{
+	/*int aux[8][8]{
 		-6, 0, 0, 0, 0, 0, 0, -6,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
@@ -557,7 +556,7 @@ int main()
 	};
 
 	TabP t;
-	lPiezas x =fGeneral(4);
+	lPiezas x =fGeneral(2);
 	t.mejorarMapa(temp, tablero, -1, 100);
 	//t.revertirMatriz(temp);
 	for (int i = 0; i < N; i++) {
@@ -568,6 +567,6 @@ int main()
 	} 
 	if (x != NULL) {
 		std::cout<<"movimiento: "<< x->pieza<<"("<<x->m->movimiento.x<<"-"<<x->m->movimiento.y<<")"<< std::endl;
-	}
+	}*/
 	return 0;
 }//holamnudi
