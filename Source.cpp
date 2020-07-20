@@ -539,11 +539,11 @@ int main()
 		-6, 0, 0, 0, 0, 0, 0, -6,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, -6, 0, 0, 0, 0, 0,
 		0, 0, 0, -6, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
-		-6, 0, 0, 0, 0, 0, 0, -6,
+		0, 0, 0, 0, 0, 0, 0, 0,
 	};
 	float temp[8][8]{
 		0, 0, 0, 0, 0, 0, 0, 0,
@@ -557,12 +557,17 @@ int main()
 	};
 
 	TabP t;
-	t.mejorarMapa(temp, tablero, 1, 100);
+	lPiezas x =fGeneral(4);
+	t.mejorarMapa(temp, tablero, -1, 100);
+	//t.revertirMatriz(temp);
 	for (int i = 0; i < N; i++) {
 		for (int s = 0; s < N; s++) {
 			std::cout << temp[i][s] << "\t";
 		}
-		std::cout<<t.getValor(tablero,-1,-1,3,4) << std::endl;
-	} //Aun en pruebas clase TabP
+		std::cout << std::endl;
+	} 
+	if (x != NULL) {
+		std::cout<<"movimiento: "<< x->pieza<<"("<<x->m->movimiento.x<<"-"<<x->m->movimiento.y<<")"<< std::endl;
+	}
 	return 0;
 }//holamnudi

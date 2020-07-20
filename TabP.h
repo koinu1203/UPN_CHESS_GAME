@@ -415,6 +415,30 @@ public:
 			for (int s = 0; s < N; s++)
 				n[i][s] = v[i][s];
 	}
+	void copiarMatriz(int n[N][N], int v[N][N]) {
+		for (int i = 0; i < N; i++)
+			for (int s = 0; s < N; s++)
+				n[i][s] = v[i][s];
+	}
+	void revertirMatriz(float t[N][N]) {
+		float temp = 0;
+		for (int i = 0; i < N; i++) {
+			for (int s = 0; s < N; s++) {
+				if (i!=N/2){
+					temp = t[i][s];
+					t[i][s] = t[N - i - 1][N - s - 1];
+					t[N - i - 1][N - s - 1] = temp;
+				}
+				else {
+					break;
+				}
+			}
+			if (i == N/2) {
+				break;
+			}
+		}
+	}
+
 	/*
 		pieza del tablero de juego valor de -6 a 6 menos 0
 		para la tabla de blancos =1 | negro -1
@@ -434,6 +458,8 @@ public:
 		default: 
 			break;
 		}
+		if (color > 0)
+			revertirMatriz(temp);
 		mejorarMapa(temp, mJuego, color, vPieza);
 		return (float)temp[y][x]*(float)vPieza;
 	}

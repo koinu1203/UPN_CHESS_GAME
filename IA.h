@@ -127,15 +127,21 @@ void addPila(pilaMov& p, pos valor) {
 	nuevo->movimiento = valor;
 	try
 	{
-		nuevo->sgte = p;
-		p = nuevo;
+		if (p == NULL) {
+			nuevo->sgte = NULL;
+			p = nuevo;
+		}
+		else {
+			nuevo->sgte = p;
+			p = nuevo;
+		}
+		
 	}
 	catch (const std::exception& ex)
 	{
 		std::cout << "Error al grabar en la pila" << std::endl;
 		std::cout << "Valor no grabado: " << valor.x << "|" << valor.y << std::endl;
 		p = NULL;
-		addPila(p, valor);
 	}
 }
 
@@ -195,7 +201,7 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 			if (t[i][s] * color > 0) {
 				lista[cont].act.x = s; //tablero[y][x];
 				lista[cont].act.y = i;
-				pilaMov movimiento = new mov;
+				pilaMov movimiento = NULL;
 				switch (abs(t[i][s])) { //falta los movimientos para las blancas y usar como tablero en int t[N][N]
 				case PEON: {
 					lista[cont].pieza = PEON * color;
@@ -743,7 +749,6 @@ void addLista(lPiezas &l, movpiezas value) {
 	lPiezas nuevo= new movpiezas;
 	nuevo->act = value.act;
 	nuevo->m = value.m;
-	nuevo->pieza = value.pieza;
 	try
 	{
 		if (l != NULL) {
@@ -841,8 +846,8 @@ void limpiarpilaMov(pilaMov& l, pilaMov& excep) {
 				std::cout << "Error al limpiar lista: lista sin fin (null)" << std::endl;
 			}
 		}
-		l = excep;
 	}
+	l = excep;
 }
 void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
 	if (p != NULL) {
@@ -850,7 +855,14 @@ void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
 		{
 			TabP t;
 			pilaMov mayor = p->m;
-			pilaMov temp=p->m->sgte;
+			pilaMov temp;
+			if (mayor->sgte != NULL) {
+				temp = p->m->sgte;
+			}
+			else {
+				temp = NULL;
+			}
+			
 			while (temp != NULL) {
 				if (t.getValor(tJuego, color, p->pieza, temp->movimiento.x, temp->movimiento.y) > t.getValor(tJuego, color, p->pieza, mayor->movimiento.x, mayor->movimiento.y))
 					mayor = temp;
@@ -925,7 +937,7 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 				if (l[i].m != NULL) {
 					temp = &l[i];
 					obtenerMejorMovdePieza(tJuegoSec, temp, color);
-					if (mayor == NULL) {
+					if (mayor->m == NULL) {
 						mayor = &l[i];
 					}
 					else {
@@ -939,11 +951,10 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 				//realizar movimiento en tablero tJuegoSec
 				realizarMov(tJuegoSec, mayor);
 				//liberar la memoria
-				float res = t.getValor(tJuegoSec, color, mayor->pieza, mayor->m->movimiento.x, mayor->m->movimiento.y);
 				delete l;
-				delete mayor;
+				//delete mayor;
 				//devolver la funcion con cont--, tablero actualizado, color*-1
-				return res + fBackTraking(cont--,tJuegoSec,color*-1);
+				return fBackTraking(cont--,tJuegoSec,color*-1);
 			}
 			else {
 				return calcularVTablero(tJuegoSec);
@@ -955,8 +966,53 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 		
 	}
 }
-void fGeneral(){
-
-
+/*
+	dif = dificultad 
+*/
+lPiezas fGeneral(int dif){
+	TabP t;
+	int tab[N][N];
+	t.copiarMatriz(tab, tablero);
+	int n = numPiezas(colorIA, tab);
+	lPiezas l = new movpiezas[n];
+	lPiezas movEs = new movpiezas;
+	movEs = NULL;
+	lPiezas temp = new movpiezas;
+	temp = NULL;
+	float mayor;
+	generarListaDeMovimientos(l, colorIA, tab);
+	for (int i = 0; i < n; i++) {
+		if (l[i].m != NULL) {
+			if (movEs == NULL) {
+				temp = &l[i];
+				t.copiarMatriz(tab, tablero);
+				obtenerMejorMovdePieza(tab, temp, colorIA);
+				movEs = temp;
+				mayor = fBackTraking(dif, tab, colorIA);
+			}
+			else
+			{
+				temp = &l[i];
+				t.copiarMatriz(tab, tablero);
+				obtenerMejorMovdePieza(tab, temp, colorIA);
+				realizarMov(tab, temp);
+				if (fBackTraking(dif, tab, colorIA) > mayor) {
+					movEs = &l[i];
+					mayor = fBackTraking(dif, tab, colorIA);
+				}
+				else if (fBackTraking(dif, tab, colorIA) == mayor && t.getValor(tab, colorIA, l[i].pieza, l[i].m->movimiento.x, l[i].m->movimiento.y) > t.getValor(tab, colorIA, movEs->pieza, movEs->m->movimiento.x, movEs->m->movimiento.y)) {
+					movEs = &l[i];
+					mayor = fBackTraking(dif, tab, colorIA);
+				}
+			}
+		}
+	}
+	if (movEs != NULL) {
+		return movEs;
+	}
+	else {
+		return NULL;
+	}
 	//funcion donde debemos analizar los posibles casos dentro de la tabla 
+
 }
