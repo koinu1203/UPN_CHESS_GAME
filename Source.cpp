@@ -241,6 +241,21 @@ int main()
 					}
 				}
 			}
+			//el bot
+			if (e.type == Event::MouseMoved) {
+				if (turno == 1) {
+					lPiezas nuevo = new movpiezas;
+					nuevo = NULL;
+					nuevo = fGeneral(4);
+					if (nuevo != NULL) {
+						realizarMov(tablero, nuevo);
+					}
+					else {
+
+					}
+					turno = 0;
+				}
+			}
 			//si el mouse termina de pulsarse
 			if (e.type == Event::MouseButtonReleased)
 			{
