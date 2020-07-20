@@ -550,11 +550,11 @@ int main()
 	}
 
 	/*int aux[8][8]{
-		-6, 0, 0, 0, 0, 0, 0, -6,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, -6, 0, 0, 0, 0, 0,
-		0, 0, 0, -6, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 5, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
@@ -571,17 +571,13 @@ int main()
 	};
 
 	TabP t;
-	lPiezas x =fGeneral(2);
-	t.mejorarMapa(temp, tablero, -1, 100);
+	t.mejorarMapa(temp, aux, 1, 90);
 	//t.revertirMatriz(temp);
 	for (int i = 0; i < N; i++) {
 		for (int s = 0; s < N; s++) {
 			std::cout << temp[i][s] << "\t";
 		}
 		std::cout << std::endl;
-	} 
-	if (x != NULL) {
-		std::cout<<"movimiento: "<< x->pieza<<"("<<x->m->movimiento.x<<"-"<<x->m->movimiento.y<<")"<< std::endl;
-	}*/
+	} */
 	return 0;
 }//holamnudi

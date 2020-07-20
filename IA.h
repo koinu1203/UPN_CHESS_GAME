@@ -194,6 +194,7 @@ int numPiezas(int color, int t[N][N]) {
 	}
 	return sum;
 }
+//por mejorar lista de mov 
 void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //color a seleccionar blanco=-1, negro=1
 	int cont = 0;
 	for (int i = 0; i < LONGITUD; i++) {
@@ -242,98 +243,68 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 				};
 				case TORRE: {
 					lista[cont].pieza = TORRE * color;
-					for (int x = s - 1; x >= 0; x--) // a la izq.
-					{
-						if (color == 1) {
-							if (t[i][x] <= 0)
-							{
-								aniadirJugada(x, i, movimiento);
+					int y;
+					for (y = i; y < N; y++) {
+						if (y != i) {
+							if (t[y][s] == 0) {
+								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[i][x] != 0)
-							{
-								break;
-							}
-						}
-						if (color == -1) {
-							if (t[i][x] >= 0)
-							{
-								aniadirJugada(x, i, movimiento);
-							}
-							else if (t[i][x] != 0)
-							{
-								break;
+							else {
+								if (t[y][s] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
 							}
 						}
 					}
-					for (int y = i - 1; y >= 0; y--) // arriba
-					{
-
-						if (color == 1) {
-							if (t[y][s] <= 0)
-							{
-								aniadirJugada(s, y, movimiento);
+					for (y = i; y >= 0; y--) {
+						if (y != i) {
+							if (t[y][s] == 0) {
+								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[y][s] != 0)
-							{
-								break;
-							}
-						}
-						if (color == -1) {
-							if (t[y][s] >= 0)
-							{
-								aniadirJugada(s, y, movimiento);
-							}
-							else if (t[y][s] != 0)
-							{
-								break;
+							else {
+								if (t[y][s] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
 							}
 						}
 					}
-					for (int x = s + 1; x <= 7; x++) // a la der.
-					{
-
-						if (color == 1) {
-							if (t[i][x] <= 0)
-							{
-								aniadirJugada(x, i, movimiento);
+					for (int x = s; x < N; x++) {
+						if (x != i) {
+							if (t[i][x] == 0) {
+								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[i][x] != 0)
-							{
-								break;
-							}
-						}
-						if (color == -1) {
-							if (t[i][x] >= 0)
-							{
-								aniadirJugada(x, i, movimiento);
-							}
-							else if (t[i][x] != 0)
-							{
-								break;
+							else {
+								if (t[i][x] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
 							}
 						}
 					}
-					for (int y = i + 1; y <= 7; y++) // abajo
-					{
-
-						if (color == 1) {
-							if (t[y][s] <= 0)
-							{
-								aniadirJugada(s, y, movimiento);
+					for (int x = s; x >= 0; x--) {
+						if (x != i) {
+							if (t[i][x] == 0) {
+								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[y][s] != 0)
-							{
-								break;
-							}
-						}
-						if (color == -1) {
-							if (t[y][s] >= 0)
-							{
-								aniadirJugada(s, y, movimiento);
-							}
-							else if (t[y][s] != 0)
-							{
-								break;
+							else {
+								if (t[i][x] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
 							}
 						}
 					}
@@ -517,202 +488,144 @@ void generarListaDeMovimientos(movpiezas lista[], int color, int t[N][N]) { //co
 				};
 				case REINA: {
 					lista[cont].pieza = REINA * color;
-					if (color == 1) {
-						for (int x = s - 1; x >= 0; x--) // a la izq.
-						{
-							if (t[i][x] <= 0)
-							{
-								aniadirJugada(x, i, movimiento);
-							}
-							else if (t[i][x] != 0)
-							{
-								break;
-							}
-						}
-						for (int y = i - 1; y >= 0; y--) // arriba
-						{
-							if (t[y][s] <= 0)
-							{
-								aniadirJugada(s, y, movimiento);
-							}
-							else if (t[y][s] != 0)
-							{
-								break;
-							}
-						}
-						for (int x = s + 1; x <= 7; x++) // a la der.
-						{
-							if (t[i][x] <= 0)
-							{
-								aniadirJugada(x, i, movimiento);
-							}
-							else if (t[i][x] != 0)
-							{
-								break;
-							}
-						}
-						for (int y = i + 1; y <= 7; y++) // abajo
-						{
-							if (t[y][s] <= 0)
-							{
-								aniadirJugada(s, y, movimiento);
-							}
-							else if (t[y][s] != 0)
-							{
-								break;
-							}
-						}
-						int x = s - 1;
-						for (int y = i - 1; y >= 0; y--) // arriba a la izq.
-						{
-							if (t[y][x] <= 0 && (x >= 0 && y >= 0))
-							{
+					int y = i;
+					for (int x = s; x < N; x++) {
+						if (x != s && y < N) {
+							if (t[y][x] == 0) {
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[y][x] != 0)
-							{
+							else {
+								if (t[y][x] *color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
+							}
+						}
+						y++;
+					}
+					y = i;
+					for (int x = s; x < N; x++) {
+						if (x != s && y >=0) {
+							if (t[y][x] == 0) {
+								aniadirJugada(x, y, movimiento);
 								break;
 							}
-							x--;
+							else {
+								if (t[y][x] *color < 0) {
+									aniadirJugada(x, y, movimiento);
+								}
+								else {
+									break;
+								}
+							}
 						}
-						x = s + 1;
-						for (int y = i - 1; y >= 0; y--) // arriba a la der.
-						{
-							if (t[y][x] <= 0 && (x < LONGITUD && y >= 0))
-							{
+						y--;
+					}
+					y = i;
+					for (int x = s; x>=0; x--) {
+						if (x != s && y <N) {
+							if (t[y][x] == 0) {
+								aniadirJugada(x, y, movimiento);
+								break;
+							}
+							else {
+								if (t[y][x] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+								}
+								else {
+									break;
+								}
+							}
+						}
+						y++;
+					}
+					y = i;
+					for (int x = s; x >=0; x--) {
+						if (x != s && y >= 0) {
+							if (t[y][x] == 0) {
+								aniadirJugada(x, y, movimiento);
+								break;
+							}
+							else {
+								if (t[y][x] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+								}
+								else {
+									break;
+								}
+							}
+						}
+						y--;
+					}
+
+					for (y = i; y < N; y++) {
+						if (y!= i ) {
+							if (t[y][s] == 0) {
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[y][x] != 0)
-							{
-								break;
+							else {
+								if (t[y][s] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
 							}
-							x++;
-						}
-						x = s - 1;
-						for (int y = i + 1; y <= 7; y++) // abajo a la izq.
-						{
-							if (t[y][x] <= 0 && (x >= 0 && y < LONGITUD))
-							{
-								aniadirJugada(x, y, movimiento);
-							}
-							else if (t[y][x] != 0)
-							{
-								break;
-							}
-							x--;
-						}
-						x = s + 1;
-						for (int y = i + 1; y <= 7; y++)  // abajo a la der.
-						{
-							if (t[y][x] <= 0 && (x < LONGITUD && y < LONGITUD))
-							{
-								aniadirJugada(x, y, movimiento);
-							}
-							else if (t[y][x] != 0)
-							{
-								break;
-							}
-							x++;
 						}
 					}
-					if (color == -1) {
-						for (int x = s - 1; x >= 0; x--) // a la izq.
-						{
-							if (t[i][x] >= 0)
-							{
-								aniadirJugada(x, i, movimiento);
-							}
-							else if (t[i][x] != 0)
-							{
-								break;
-							}
-						}
-						for (int y = i - 1; y >= 0; y--) // arriba
-						{
-							if (t[y][s] >= 0)
-							{
-								aniadirJugada(s, y, movimiento);
-							}
-							else if (t[y][s] != 0)
-							{
-								break;
-							}
-						}
-						for (int x = s + 1; x <= 7; x++) // a la der.
-						{
-							if (t[i][x] >= 0)
-							{
-								aniadirJugada(x, i, movimiento);
-							}
-							else if (t[i][x] != 0)
-							{
-								break;
-							}
-						}
-						for (int y = i + 1; y <= 7; y++) // abajo
-						{
-							if (t[y][s] >= 0)
-							{
-								aniadirJugada(s, y, movimiento);
-							}
-							else if (t[y][s] != 0)
-							{
-								break;
-							}
-						}
-						int x = s - 1;
-						for (int y = i - 1; y >= 0; y--) // arriba a la izq.
-						{
-							if (t[y][x] >= 0 && (x >= 0 && y >= 0))
-							{
+					for (y = i; y >= 0; y--) {
+						if (y != i) {
+							if (t[y][s] == 0) {
 								aniadirJugada(x, y, movimiento);
 							}
-							else if (t[y][x] != 0)
-							{
-								break;
+							else {
+								if (t[y][s] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
 							}
-							x--;
-						}
-						x = s + 1;
-						for (int y = i - 1; y >= 0; y--) // arriba a la der.
-						{
-							if (t[y][x] >= 0 && (x < LONGITUD && y >= 0))
-							{
-								aniadirJugada(x, y, movimiento);
-							}
-							else if (t[y][x] != 0)
-							{
-								break;
-							}
-							x++;
-						}
-						x = s - 1;
-						for (int y = i + 1; y <= 7; y++) // abajo a la izq.
-						{
-							if (t[y][x] >= 0 && (x >= 0 && y < LONGITUD))
-							{
-								aniadirJugada(x, y, movimiento);
-							}
-							else if (t[y][x] != 0)
-							{
-								break;
-							}
-							x--;
-						}
-						x = s + 1;
-						for (int y = i + 1; y <= 7; y++)  // abajo a la der.
-						{
-							if (t[y][x] >= 0 && (x < LONGITUD && y < LONGITUD))
-							{
-								aniadirJugada(x, y, movimiento);
-							}
-							else if (t[y][x] != 0)
-							{
-								break;
-							}
-							x++;
 						}
 					}
+					for (int x=s; x < N; x++) {
+						if (x != i) {
+							if (t[i][x] == 0) {
+								aniadirJugada(x, y, movimiento);
+							}
+							else {
+								if (t[i][x] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
+							}
+						}
+					}
+					for (int x = s; x >=0; x--) {
+						if (x != i) {
+							if (t[i][x] == 0) {
+								aniadirJugada(x, y, movimiento);
+							}
+							else {
+								if (t[i][x] * color < 0) {
+									aniadirJugada(x, y, movimiento);
+									break;
+								}
+								else {
+									break;
+								}
+							}
+						}
+					}
+
 					lista[cont].m = movimiento;
 					break;
 				};
