@@ -130,7 +130,7 @@ public:
 				}
 			}
 		}
-		for (int i = y; i < N; i--) {
+		for (int i = y; i >=0; i--) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
 					mPieza[i][x] -= 1.0;
@@ -272,7 +272,7 @@ public:
 				}
 			}
 		}
-		for (int i = y; i < N; i--) {
+		for (int i = y; i >= 0; i--) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
 					mPieza[i][x] -= 1.0;
@@ -298,7 +298,7 @@ public:
 		}
 		s = x;
 		for (int i = y; i < N; i++) {
-			if (i != y) {
+			if (i != y && y < N) {
 				if (mJuego[i][s] == 0) {
 					mPieza[i][s] -= 1.0;
 				}
@@ -435,7 +435,7 @@ public:
 			break;
 		}
 		mejorarMapa(temp, mJuego, color, vPieza);
-		return temp[y][x]*(float)vPieza;
+		return (float)temp[y][x]*(float)vPieza;
 	}
 
 };

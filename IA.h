@@ -8,7 +8,7 @@
 #define ALFIL 4 
 #define REINA 5
 #define REY 6 
-
+int colorIA=1; //blanco =-1 negro =1
 struct mov { 
 	pos movimiento; 
 	mov* sgte; 
@@ -125,7 +125,6 @@ void addPila(pilaMov& p, pos valor) {
 
 	pilaMov nuevo = new mov;
 	nuevo->movimiento = valor;
-	nuevo->sgte = p;
 	try
 	{
 		nuevo->sgte = p;
@@ -168,7 +167,7 @@ pos getPila(pilaMov& p) {
 }
 
 
-void aniadirJugada(int x, int y, pilaMov pilamovi) {
+void aniadirJugada(int x, int y, pilaMov &pilamovi) {
 	pos posi;
 	posi.x = x;
 	posi.y = y;
@@ -881,13 +880,37 @@ void realizarMov(int t[N][N], lPiezas m) {
 	t[m->act.y][m->act.x] = 0;
 	t[m->m->movimiento.y][m->m->movimiento.x] = m->pieza;
 }
+
+/*
+	valor de tablero 
+	para las blancas= -1
+	para negras = 1;
+*/
+int calcularVTablero(int t[8][8]) {
+	int sum = 0;
+	for (int i = 0; i < 8; i++) {
+		for (int s = 0; s < 9; s++) {
+			switch (abs(t[y][x]))
+			{
+			case 1: sum = t[y][x]>0? sum+10:sum-10; break;
+			case 2: sum = t[y][x] > 0 ? sum + 50 : sum - 50; break;
+			case 3: case 4: sum = t[y][x] > 0 ? sum + 30 : sum - 30; break;
+			case 5: sum = t[y][x] > 0 ? sum + 90 : sum - 90; break; 
+			case 6: sum = t[y][x] > 0 ? sum + 900 : sum - 900; break;
+			default:
+				break;
+			}
+		}
+	}
+	return sum * colorIA;
+}
 /*
 	cont = contador de profundidad
 	color blanco =-1 negro =1
 */
 float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 	if (cont == 0) {
-		return 0.0;
+		return calcularVTablero(tJuegoSec);
 	}
 	else {
 		int num = numPiezas(color, tJuegoSec);
@@ -923,15 +946,17 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 				return res + fBackTraking(cont--,tJuegoSec,color*-1);
 			}
 			else {
-				return -9000.0;
+				return calcularVTablero(tJuegoSec);
 			}
 		}
 		else {
-			return -9000.0;
+			return -900;
 		}
 		
 	}
 }
 void fGeneral(){
+
+
 	//funcion donde debemos analizar los posibles casos dentro de la tabla 
 }
