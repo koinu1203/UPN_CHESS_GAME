@@ -1034,6 +1034,42 @@ int movCaballoBlanco(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
+int movCaballoBlanco(int prevX, int prevY, int nuevoX, int nuevoY,int [8][8])
+{
+	if (prevY - 2 >= 0 && prevX - 1 >= 0 && nuevoY == prevY - 2 && nuevoX == prevX - 1 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // UUR
+	}
+	if (prevY - 2 >= 0 && prevX + 1 < LONGITUD && nuevoY == prevY - 2 && nuevoX == prevX + 1 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // UUL
+	}
+	if (prevY - 1 >= 0 && prevX + 2 < LONGITUD && nuevoY == prevY - 1 && nuevoX == prevX + 2 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // RRU
+	}
+	if (prevY + 1 >= 0 && prevX + 2 < LONGITUD && nuevoY == prevY + 1 && nuevoX == prevX + 2 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // RRD
+	}
+	if (prevY + 2 < LONGITUD && prevX + 1 < LONGITUD && nuevoY == prevY + 2 && nuevoX == prevX + 1 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // LLU
+	}
+	if (prevY + 2 < LONGITUD && prevX - 1 >= 0 && nuevoY == prevY + 2 && nuevoX == prevX - 1 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // LLD
+	}
+	if (prevY + 1 < LONGITUD && prevX - 2 >= 0 && nuevoY == prevY + 1 && nuevoX == prevX - 2 && t[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // DDR
+	}
+	if (prevY - 1 >= 0 && prevX - 2 >= 0 && nuevoY == prevY - 1 && nuevoX == prevX - 2 && tablero[nuevoY][nuevoX] >= 0)
+	{
+		return 1; // DDL
+	}
+	return 0;
+}
 
 int movCaballoNegro(int prevX, int prevY, int nuevoX, int nuevoY)
 {
@@ -1071,7 +1107,42 @@ int movCaballoNegro(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
-
+int movCaballoNegro(int prevX, int prevY, int nuevoX, int nuevoY, int t[8][8])
+{
+	if (prevY - 2 >= 0 && prevX - 1 >= 0 && nuevoY == prevY - 2 && nuevoX == prevX - 1 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // UUR
+	}
+	if (prevY - 2 >= 0 && prevX + 1 < LONGITUD && nuevoY == prevY - 2 && nuevoX == prevX + 1 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // UUL
+	}
+	if (prevY - 1 >= 0 && prevX + 2 < LONGITUD && nuevoY == prevY - 1 && nuevoX == prevX + 2 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // RRU
+	}
+	if (prevY + 1 >= 0 && prevX + 2 < LONGITUD && nuevoY == prevY + 1 && nuevoX == prevX + 2 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // RRD
+	}
+	if (prevY + 2 < LONGITUD && prevX + 1 < LONGITUD && nuevoY == prevY + 2 && nuevoX == prevX + 1 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // LLU
+	}
+	if (prevY + 2 < LONGITUD && prevX - 1 >= 0 && nuevoY == prevY + 2 && nuevoX == prevX - 1 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // LLD
+	}
+	if (prevY + 1 < LONGITUD && prevX - 2 >= 0 && nuevoY == prevY + 1 && nuevoX == prevX - 2 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // DDR
+	}
+	if (prevY - 1 >= 0 && prevX - 2 >= 0 && nuevoY == prevY - 1 && nuevoX == prevX - 2 && t[nuevoY][nuevoX] <= 0)
+	{
+		return 1; // DDL
+	}
+	return 0;
+}
 
 int jaqueABlancoConPeon(int posX, int posY, int reyX, int reyY)
 {
