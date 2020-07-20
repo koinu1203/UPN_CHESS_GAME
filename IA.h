@@ -10,7 +10,7 @@
 #define REY 6 
 int colorIA=1; //blanco =-1 negro =1
 struct mov { 
-	pos movimiento; 
+	pos movimiento; //x y
 	mov* sgte; 
 };
 
@@ -68,6 +68,7 @@ void acTabV(int a[N][N],int b[N][N]) {
 		}
 	}
 }
+float calcularVTablero(int t[8][8]);
 /*
 	requisitos del algoritmo
 	1)	Que te permita escoger un movimiento de todos los permitidos
@@ -717,6 +718,38 @@ void limpiarpilaMov(pilaMov& l, pilaMov& excep) {
 	}
 	l = excep;
 }
+void realizarMov(int t[N][N], lPiezas m) {
+	if (abs(m->pieza) == 6 && (m->act.x + 2 == m->m->movimiento.x || m->act.x - 2 == m->m->movimiento.x)) {
+		if (m->m->movimiento.x > m->act.x) {
+			t[m->act.y][m->act.x + 1] = t[m->act.y][7];
+			t[m->act.y][7] = 0;
+		}
+		else {
+			t[m->act.y][m->act.x - 1] = t[m->act.y][0];
+			t[m->act.y][0] = 0;
+		}
+
+	}
+	//TABLERO[y][x]
+	t[m->m->movimiento.y][m->m->movimiento.x] = t[m->act.y][m->act.x];
+	t[m->act.y][m->act.x] = 0;
+}
+void realizarMov(int t[N][N], pilaMov m ,int xAct, int yAct) {
+	if (abs(t[yAct][xAct]) == 6 && (xAct + 2 == m->movimiento.x || xAct - 2 == m->movimiento.x)) {
+		if (m->movimiento.x > xAct) {
+			t[yAct][xAct + 1] = t[yAct][7];
+			t[yAct][7] = 0;
+		}
+		else {
+			t[yAct][xAct - 1] = t[yAct][0];
+			t[yAct][0] = 0;
+		}
+
+	}
+	//TABLERO[y][x]
+	t[m->movimiento.y][m->movimiento.x] = t[yAct][xAct];
+	t[yAct][xAct] = 0;
+}
 void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
 	if (p != NULL) {
 		try
@@ -724,6 +757,7 @@ void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
 			TabP t;
 			pilaMov mayor = p->m;
 			pilaMov temp;
+			int a[8][8], b[8][8];
 			if (mayor->sgte != NULL) {
 				temp = p->m->sgte;
 			}
@@ -732,8 +766,19 @@ void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
 			}
 			
 			while (temp != NULL) {
-				if (t.getValor(tJuego, color, p->pieza, temp->movimiento.x, temp->movimiento.y) > t.getValor(tJuego, color, p->pieza, mayor->movimiento.x, mayor->movimiento.y))
+				t.copiarMatriz(a, tJuego);
+				t.copiarMatriz(b, tJuego);
+				realizarMov(a,temp,p->act.x,p->act.y);
+				realizarMov(b, mayor, p->act.x, p->act.y);
+				if (calcularVTablero(a) > calcularVTablero(b))
 					mayor = temp;
+				else {
+					if (calcularVTablero(a) == calcularVTablero(b)) {
+						if (t.getValor(tJuego, color, p->pieza, temp->movimiento.x, temp->movimiento.y) > t.getValor(tJuego, color, p->pieza, mayor->movimiento.x, mayor->movimiento.y)) {
+							mayor = temp;
+						}
+					}
+				}
 				temp = temp->sgte;
 			}
 			limpiarpilaMov(p->m, mayor);
@@ -745,22 +790,7 @@ void obtenerMejorMovdePieza(int tJuego[N][N],lPiezas &p,int color) {
 	}
 }
 
-void realizarMov(int t[N][N], lPiezas m) {
-	if (abs(m->pieza) == 6 && (m->act.x+2== m->m->movimiento.x || m->act.x - 2 == m->m->movimiento.x)) {
-		if (m->m->movimiento.x > m->act.x) {
-			t[m->act.y][m->act.x + 1] = t[m->act.y][7];
-			t[m->act.y][7] = 0;
-		}
-		else {
-			t[m->act.y][m->act.x - 1] = t[m->act.y][0];
-			t[m->act.y][0] = 0;
-		}
-			
-	}
-	//TABLERO[y][x]
-	t[m->m->movimiento.y][m->m->movimiento.x] = t[m->act.y][m->act.x];
-	t[m->act.y][m->act.x] = 0;
-}
+
 
 /*
 	valor de tablero 
@@ -810,7 +840,7 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 			lPiezas temp;
 			mayor->m = NULL;
 			TabP t;
-			int g[8][8];
+			int a[8][8],b[8][8];
 			generarListaDeMovimientos(l,color,tJuegoSec);//adaptar obtener movimientos
 			for (int i = 0; i < num; i++) {
 				if (l[i].m != NULL) {
@@ -820,17 +850,26 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 						mayor = &l[i];
 					}
 					else {
-						if (t.getValor(tJuegoSec, color, l[i].pieza, l[i].m->movimiento.x, l[i].m->movimiento.y) > t.getValor(tJuegoSec, color, mayor->pieza, mayor->m->movimiento.x, mayor->m->movimiento.y)) {
-							mayor = &l[i];
+						t.copiarMatriz(a, tJuegoSec);
+						t.copiarMatriz(b, tJuegoSec);
+						realizarMov(a,temp);
+						realizarMov(b,mayor);
+						if ((calcularVTablero(a) + t.getValor(tJuegoSec, color, l[i].pieza, l[i].m->movimiento.x, l[i].m->movimiento.y) > calcularVTablero(b) + t.getValor(tJuegoSec, color, mayor->pieza, mayor->m->movimiento.x, mayor->m->movimiento.y))) {
+							mayor = temp;
+						}	
+						else {
+							if (calcularVTablero(a) == calcularVTablero(b)) {
+								if (t.getValor(tJuegoSec, color, l[i].pieza, l[i].m->movimiento.x, l[i].m->movimiento.y) > t.getValor(tJuegoSec, color, mayor->pieza, mayor->m->movimiento.x, mayor->m->movimiento.y)) {
+									mayor = temp;
+								}
+							}
 						}
 					}
 				}
 			}
 			if (mayor != NULL) {
 				//realizar movimiento en tablero tJuegoSec
-				t.copiarMatriz(g, tJuegoSec);
 				realizarMov(tJuegoSec, mayor);
-				t.copiarMatriz(g, tJuegoSec);
 				//liberar la memoria
 				delete l;
 				//delete mayor;
@@ -838,7 +877,7 @@ float fBackTraking(int cont,int tJuegoSec[N][N],int color){
 				return fBackTraking(cont-1,tJuegoSec,color*-1);
 			}
 			else {
-				return calcularVTablero(tJuegoSec)-900;
+				return -9000.0;
 			}
 		}
 		else {

@@ -63,6 +63,20 @@ int main()
 			}
 			ventana.clear();
 			//si el mouse es presionado
+			if (e.type == Event::MouseMoved) {
+				if (turno == 1) {
+					lPiezas nuevo = new movpiezas;
+					nuevo = NULL;
+					nuevo = fGeneral(10); //<-------IA
+					if (nuevo != NULL) {
+						realizarMov(tablero, nuevo);
+					}
+					else {
+
+					}
+					turno = 0;
+				}
+			}
 			if (e.type == Event::MouseButtonPressed)
 			{
 				//si el boton izquierdo del mouse es presionado
@@ -242,20 +256,7 @@ int main()
 				}
 			}
 			//el bot
-			if (e.type == Event::MouseMoved) {
-				if (turno == 1) {
-					lPiezas nuevo = new movpiezas;
-					nuevo = NULL;
-					nuevo = fGeneral(10);
-					if (nuevo != NULL) {
-						realizarMov(tablero, nuevo);
-					}
-					else {
-
-					}
-					turno = 0;
-				}
-			}
+			
 			//si el mouse termina de pulsarse
 			if (e.type == Event::MouseButtonReleased)
 			{
@@ -549,7 +550,7 @@ int main()
 		ventana.display(); //mostrar ventana
 	}
 
-	/*int aux[8][8]{
+	int aux[8][8]{
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 1, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
@@ -572,18 +573,12 @@ int main()
 
 	TabP t;
 	//t.revertirMatriz(temp);
-	movpiezas x[1];
-	x[0].act.x = 4;
-	x[0].act.y = 4;
-	x[0].m = NULL;
-	x[0].pieza = aux[4][4];
-	generarListaDeMovimientos(x,1,aux);
-	escribirpila(aux, x[0].m);
+	t.mejorarMapa(temp, tablero, 1, 100);
 	for (int i = 0; i < N; i++) {
 		for (int s = 0; s < N; s++) {
-			std::cout << aux[i][s] << "\t";
+			std::cout << temp[i][s] << "\t";
 		}
 		std::cout << std::endl;
-	}*/
+	}
 	return 0;
 }//holamnudi

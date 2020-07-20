@@ -79,15 +79,15 @@ public:
 	*/
 	void clavarpeon(float mPieza[N][N], int x, int y,int vPieza,int color) {
 		if (x != 0 && x != N - 1) {
-			mPieza[y + color][x+1] -= -3.0; //derecha
-			mPieza[y + color][x-1] -= -3.0; //izquierda
+			mPieza[y + color][x+1] -= -3.0*(float)vPieza; //derecha
+			mPieza[y + color][x-1] -= -3.0 * (float)vPieza; //izquierda
 		}
 		else {
 			if (x == 0) {
-				mPieza[y + color][(x + 1)] -= 3.0;
+				mPieza[y + color][(x + 1)] -= 3.0 * (float)vPieza;
 			}
 			if (x == N - 1) {
-				mPieza[y + color][x - 1] -= 3.0;
+				mPieza[y + color][x - 1] -= 3.0 * (float)vPieza;
 			}
 		}
 		mPieza[y][x] += (10.0 / (float)vPieza);
@@ -100,10 +100,10 @@ public:
 		for (int i = x; i < N; i++) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -= 2.5;
+					mPieza[y][i] -= 1.5 * (float)vPieza;
 				}
 				else {
-					mPieza[y][i] -= 1.5;
+					mPieza[y][i] -= 2.5 * (float)vPieza;
 					break;
 				}
 			}
@@ -111,10 +111,10 @@ public:
 		for (int i = x; i >= 0; i--) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -=  2.5;
+					mPieza[y][i] -=  1.5 * (float)vPieza;
 				}
 				else {
-					mPieza[y][i] -= 1.5;
+					mPieza[y][i] -= 2.5 * (float)vPieza;
 					break;
 				}
 			}
@@ -122,10 +122,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 2.5;
+					mPieza[i][x] -= 1.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][x] -= 1.5;
+					mPieza[i][x] -= 2.5 *(float)vPieza;
 					break;
 				}
 			}
@@ -133,10 +133,10 @@ public:
 		for (int i = y; i >=0; i--) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 2.5;
+					mPieza[i][x] -= 1.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][x] -= 1.5;
+					mPieza[i][x] -= 2.5 * (float)vPieza;
 					break;
 				}
 			}
@@ -150,28 +150,28 @@ public:
 	void clavarCaballo(float mPieza[N][N], int x, int y, int vPieza) {
 		if (y - 2 >= 0) {
 			if(x + 1 < N)
-				mPieza[y - 2][x + 1] -= 1.0;
+				mPieza[y - 2][x + 1] -= 2.0*(float)vPieza;
 			if (x - 1 >= 0)
-				mPieza[y - 2][x - 1] -= 1.0;
+				mPieza[y - 2][x - 1] -= 2.0 * (float)vPieza;
 		}
 
 		if (x + 2 < N) {
 			if(y+1<N)
-				mPieza[y + 1][x + 2] -= 1.0;
+				mPieza[y + 1][x + 2] -= 2.0 * (float)vPieza;
 			if(y-1>0)
-				mPieza[y - 1][x + 2] -= 1.0;
+				mPieza[y - 1][x + 2] -= 2.0 * (float)vPieza;
 		}
 		if (x - 2 > 0 ) {
 			if(y+1<N)
-				mPieza[y + 1][x - 2] -= 1.0;
+				mPieza[y + 1][x - 2] -= 2.0 * (float)vPieza;
 			if(y-1>0)
-				mPieza[y - 1][x - 2] -= 1.0;
+				mPieza[y - 1][x - 2] -= 2.0 * (float)vPieza;
 		}
 		if (y + 2 < N) {
 			if(x+1<N)
-				mPieza[y + 2][x + 1] -= 1.0;
+				mPieza[y + 2][x + 1] -= 2.0 * (float)vPieza;
 			if(x-1>0)
-				mPieza[y + 2][x - 1] -= 1.0;
+				mPieza[y + 2][x - 1] -= 2.0 * (float)vPieza;
 		}
 		mPieza[y][x] += (30/(float)vPieza);
 	}
@@ -184,11 +184,11 @@ public:
 		for (int i = y; i < N; i++) {
 			if (i != y&&s<N) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 1.0 * (float)vPieza;
 					
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 2.0 * (float)vPieza;
 					break;
 				}
 			}
@@ -198,10 +198,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (i != y && s>=0) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 1.0 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 2.0 * (float)vPieza;
 					break;
 				}
 			}
@@ -211,10 +211,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (i != y&& s<N) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 1.0 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 2.0 * (float)vPieza;
 					break;
 				}
 			}
@@ -224,10 +224,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (i != y && s>=0) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 1.0 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 1.0;
+					mPieza[i][s] -= 2.0 * (float)vPieza;
 					break;
 				}
 			}
@@ -243,10 +243,10 @@ public:
 		for (int i = x; i < N; i++) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -= 0.5;
+					mPieza[y][i] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[y][i] -= 0.5;
+					mPieza[y][i] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -254,10 +254,10 @@ public:
 		for (int i = x; i >= 0; i--) {
 			if (x != i) {
 				if (mJuego[y][i] == 0) {
-					mPieza[y][i] -= 0.5;
+					mPieza[y][i] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[y][i] -= 0.5;
+					mPieza[y][i] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -265,10 +265,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 0.5;
+					mPieza[i][x] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][x] -= 0.5;
+					mPieza[i][x] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -276,10 +276,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (y != i) {
 				if (mJuego[i][x] == 0) {
-					mPieza[i][x] -= 0.5;
+					mPieza[i][x] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][x] -= 0.5;
+					mPieza[i][x] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -288,10 +288,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (i != y && s<N) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -301,10 +301,10 @@ public:
 		for (int i = y; i < N; i++) {
 			if (i != y && s>=0) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -314,10 +314,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (i != y && s<N) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 2 * (float)vPieza;
 					break;
 				}
 			}
@@ -327,10 +327,10 @@ public:
 		for (int i = y; i >= 0; i--) {
 			if (i != y && s>=0) {
 				if (mJuego[i][s] == 0) {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 0.5 * (float)vPieza;
 				}
 				else {
-					mPieza[i][s] -= 0.5;
+					mPieza[i][s] -= 2;
 					break;
 				}
 			}
@@ -346,22 +346,22 @@ public:
 		if (x + 1 >= 0) {
 			mPieza[y][x + 1] -= 1.0;
 			if(y-1>=0)
-				mPieza[y -1][x + 1] -= 0.5;//
+				mPieza[y -1][x + 1] -= 0.5 * (float)vPieza;//
 		}
 		if (x - 1 >= 0) {
 			mPieza[y][x - 1] -= 1.0;
 			if (y + 1 < N)
-				mPieza[y + 1][x - 1] -= 0.5;
+				mPieza[y + 1][x - 1] -= 0.5 * (float)vPieza;
 		}
 		if (y + 1 >= 0) {
 			mPieza[y+1][x] -= 1.0;
 			if(x+1<N)
-				mPieza[y + 1][x+1] -= 0.5;
+				mPieza[y + 1][x+1] -= 0.5 * (float)vPieza;
 		}
 		if (y - 1 >= 0) {
 			mPieza[y - 1][x] -= 1.0;
 			if(x-1>=0)
-				mPieza[y - 1][x-1] -= 0.5;
+				mPieza[y - 1][x-1] -= 0.5 * (float)vPieza;
 		}
 		mPieza[y][x] += (900/(float)vPieza);
 	}
