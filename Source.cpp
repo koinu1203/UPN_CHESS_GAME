@@ -246,7 +246,7 @@ int main()
 				if (turno == 1) {
 					lPiezas nuevo = new movpiezas;
 					nuevo = NULL;
-					nuevo = fGeneral(4);
+					nuevo = fGeneral(10);
 					if (nuevo != NULL) {
 						realizarMov(tablero, nuevo);
 					}
@@ -551,11 +551,11 @@ int main()
 
 	/*int aux[8][8]{
 		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 1, 0, 2, 0, 0, 1, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 5, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, -1, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 	};
@@ -571,13 +571,19 @@ int main()
 	};
 
 	TabP t;
-	t.mejorarMapa(temp, aux, 1, 90);
 	//t.revertirMatriz(temp);
+	movpiezas x[1];
+	x[0].act.x = 4;
+	x[0].act.y = 4;
+	x[0].m = NULL;
+	x[0].pieza = aux[4][4];
+	generarListaDeMovimientos(x,1,aux);
+	escribirpila(aux, x[0].m);
 	for (int i = 0; i < N; i++) {
 		for (int s = 0; s < N; s++) {
-			std::cout << temp[i][s] << "\t";
+			std::cout << aux[i][s] << "\t";
 		}
 		std::cout << std::endl;
-	} */
+	}*/
 	return 0;
 }//holamnudi

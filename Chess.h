@@ -74,6 +74,35 @@ int movPeonBlanco(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
+int movPeonBlanco(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	if (prevPos.y == 6)
+	{
+		if ((nuevoY == prevY - 1 && nuevoX == prevX && t[prevY - 1][prevX] == 0) || (nuevoY == prevY - 2 && nuevoX == prevX && t[prevY - 1][prevX] == 0 && t[prevY - 2][prevX] == 0))
+		{
+			return 1;
+		}
+	}
+	else if (nuevoY == prevY - 1 && nuevoX == prevX && t[prevY - 1][prevX] == 0)
+	{
+		return 1;
+	}
+	if (t[prevY - 1][prevX - 1] > 0)
+	{
+		if (nuevoY == prevY - 1 && nuevoX == prevX - 1)
+		{
+			return 1;
+		}
+	}
+	if (t[prevY - 1][prevX + 1] > 0)
+	{
+		if (nuevoY == prevY - 1 && nuevoX == prevX + 1)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
 
 int movPeonNegro(int prevX, int prevY, int nuevoX, int nuevoY)
 {
@@ -96,6 +125,35 @@ int movPeonNegro(int prevX, int prevY, int nuevoX, int nuevoY)
 		}
 	}
 	if (tablero[prevY + 1][prevX + 1] < 0)
+	{
+		if (nuevoY == prevY + 1 && nuevoX == prevX + 1)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+int movPeonNegro(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	if (prevPos.y == 1)
+	{
+		if ((nuevoY == prevY + 1 && nuevoX == prevX && t[prevY + 1][prevX] == 0) || (nuevoY == prevY + 2 && nuevoX == prevX && t[prevY + 1][prevX] == 0 && t[prevY + 2][prevX] == 0))
+		{
+			return 1;
+		}
+	}
+	else if (nuevoY == prevY + 1 && nuevoX == prevX && t[prevY + 1][prevX] == 0)
+	{
+		return 1;
+	}
+	if (t[prevY + 1][prevX - 1] < 0)
+	{
+		if (nuevoY == prevY + 1 && nuevoX == prevX - 1)
+		{
+			return 1;
+		}
+	}
+	if (t[prevY + 1][prevX + 1] < 0)
 	{
 		if (nuevoY == prevY + 1 && nuevoX == prevX + 1)
 		{
@@ -153,6 +211,54 @@ int movTorreBlanca(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
+int movTorreBlanca(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	for (int i = prevX - 1; i >= 0; i--)
+	{ // a la izq.
+		if (t[prevY][i] >= 0 && (nuevoX == i && nuevoY == prevY))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY - 1; i >= 0; i--) // arriba
+	{
+		if (t[i][prevX] >= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevX + 1; i <= 7; i++) // a la der.
+	{
+		if (t[prevY][i] >= 0 && (nuevoY == prevY && nuevoX == i))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY + 1; i <= 7; i++) // abajo
+	{
+		if (t[i][prevX] >= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	return 0;
+}
 
 int movTorreNegra(int prevX, int prevY, int nuevoX, int nuevoY)
 {
@@ -196,6 +302,54 @@ int movTorreNegra(int prevX, int prevY, int nuevoX, int nuevoY)
 			return 1;
 		}
 		else if (tablero[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	return 0;
+}
+int movTorreNegra(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	for (int i = prevX - 1; i >= 0; i--) // a la der.
+	{
+		if (t[prevY][i] <= 0 && (nuevoX == i && nuevoY == prevY))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY - 1; i >= 0; i--) // arriba
+	{
+		if (t[i][prevX] <= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevX + 1; i <= 7; i++) // a la izq.
+	{
+		if (t[prevY][i] <= 0 && (nuevoY == prevY && nuevoX == i))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY + 1; i <= 7; i++) // abajo
+	{
+		if (t[i][prevX] <= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
 		{
 			break;
 		}
@@ -259,6 +413,62 @@ int movAlfilBlanco(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
+int movAlfilBlanco(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	int j = prevX - 1;
+	for (int i = prevY - 1; i >= 0; i--) // diagonal der. arriba
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY - 1; i >= 0; i--) // diagonal izq. arriba
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	j = prevX - 1;
+	for (int i = prevY + 1; i <= 7; i++) // diagonal izq. abajo
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY + 1; i <= 7; i++)  // diagonal der. abajo
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	return 0;
+}
 
 int movAlfilNegro(int prevX, int prevY, int nuevoX, int nuevoY)
 {
@@ -309,6 +519,62 @@ int movAlfilNegro(int prevX, int prevY, int nuevoX, int nuevoY)
 			return 1;
 		}
 		else if (tablero[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	return 0;
+}
+int movAlfilNegro(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	int j = prevX - 1;
+	for (int i = prevY - 1; i >= 0; i--) // diagonal der. arriba
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY - 1; i >= 0; i--) // diagonal izq. arriba
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	j = prevX - 1;
+	for (int i = prevY + 1; i <= 7; i++) // diagonal izq. abajo
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY + 1; i <= 7; i++)  // diagonal der. abajo
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
 		{
 			break;
 		}
@@ -417,6 +683,106 @@ int movReinaBlanca(int prevX, int prevY, int nuevoX, int nuevoY)
 	}
 	return 0;
 }
+int movReinaBlanca(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	for (int i = prevX - 1; i >= 0; i--) // a la izq.
+	{
+		if (t[prevY][i] >= 0 && (nuevoX == i && nuevoY == prevY))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY - 1; i >= 0; i--) // arriba
+	{
+		if (t[i][prevX] >= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevX + 1; i <= 7; i++) // a la der.
+	{
+		if (t[prevY][i] >= 0 && (nuevoY == prevY && nuevoX == i))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY + 1; i <= 7; i++) // abajo
+	{
+		if (t[i][prevX] >= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	int j = prevX - 1;
+	for (int i = prevY - 1; i >= 0; i--) // arriba a la izq.
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY - 1; i >= 0; i--) // arriba a la der.
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	j = prevX - 1;
+	for (int i = prevY + 1; i <= 7; i++) // abajo a la der.
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY + 1; i <= 7; i++)  // abajo a la izq.
+	{
+		if (t[i][j] >= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	return 0;
+}
 
 int movReinaNegra(int prevX, int prevY, int nuevoX, int nuevoY)
 {
@@ -511,6 +877,106 @@ int movReinaNegra(int prevX, int prevY, int nuevoX, int nuevoY)
 			return 1;
 		}
 		else if (tablero[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	return 0;
+}
+int movReinaNegra(int prevX, int prevY, int nuevoX, int nuevoY,int t[8][8])
+{
+	for (int i = prevX - 1; i >= 0; i--) // a la izq.
+	{
+		if (t[prevY][i] <= 0 && (nuevoX == i && nuevoY == prevY))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY - 1; i >= 0; i--) // arriba
+	{
+		if (t[i][prevX] <= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevX + 1; i <= 7; i++) // a la der.
+	{
+		if (t[prevY][i] <= 0 && (nuevoY == prevY && nuevoX == i))
+		{
+			return 1;
+		}
+		else if (t[prevY][i] != 0)
+		{
+			break;
+		}
+	}
+	for (int i = prevY + 1; i <= 7; i++) // abajo
+	{
+		if (t[i][prevX] <= 0 && (nuevoY == i && nuevoX == prevX))
+		{
+			return 1;
+		}
+		else if (t[i][prevX] != 0)
+		{
+			break;
+		}
+	}
+	int j = prevX - 1;
+	for (int i = prevY - 1; i >= 0; i--) // arriba a la izq.
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY - 1; i >= 0; i--) // arriba a la der.
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j++;
+	}
+	j = prevX - 1;
+	for (int i = prevY + 1; i <= 7; i++) // abajo a la izq.
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
+		{
+			break;
+		}
+		j--;
+	}
+	j = prevX + 1;
+	for (int i = prevY + 1; i <= 7; i++)  // abajo a la der.
+	{
+		if (t[i][j] <= 0 && (nuevoY == i && nuevoX == j))
+		{
+			return 1;
+		}
+		else if (t[i][j] != 0)
 		{
 			break;
 		}
